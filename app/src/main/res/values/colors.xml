@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="app_bg">#040f07</color>
+    <color name="accent_green">#22c55e</color>
+    <color name="white">#FFFFFF</color>
+</resources>

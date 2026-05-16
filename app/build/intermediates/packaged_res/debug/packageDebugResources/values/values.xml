@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="accent_green">#22c55e</color>
+    <color name="app_bg">#040f07</color>
+    <color name="white">#FFFFFF</color>
+    <string name="app_name">Karunada-Vanya</string>
+    <style name="Theme.KarunadaVanyaa" parent="Theme.AppCompat.NoActionBar">
+        
+        <item name="android:windowBackground">@color/app_bg</item>
+        
+        <item name="android:statusBarColor">@color/app_bg</item>
+        
+        <item name="android:navigationBarColor">@color/app_bg</item>
+        
+        <item name="android:windowLightStatusBar">false</item>
+        
+        <item name="android:windowLightNavigationBar">false</item>
+    </style>
+</resources>

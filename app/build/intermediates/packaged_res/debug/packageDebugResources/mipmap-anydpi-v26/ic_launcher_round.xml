@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Adaptive round icon for API 26+ devices.
+    Uses the existing round PNG mipmaps as the foreground layer.
+-->
+<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+    <background android:drawable="@color/app_bg" />
+    <foreground android:drawable="@mipmap/ic_launcher_round" />
+</adaptive-icon>

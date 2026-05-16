@@ -1,0 +1,13 @@
+R_DEF: Internal format may change without notice
+local
+color accent_green
+color app_bg
+color white
+id loadingBar
+id webView
+layout activity_main
+mipmap ic_launcher
+mipmap ic_launcher_round
+string app_name
+style Theme.KarunadaVanyaa
+xml network_security_config

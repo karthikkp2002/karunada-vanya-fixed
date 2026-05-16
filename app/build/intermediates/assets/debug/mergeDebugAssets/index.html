@@ -1,0 +1,2253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+<meta name="description" content="Karunada-Vanya – Karnataka Wildlife Awareness & Human-Wildlife Conflict Reporting"/>
+<meta name="theme-color" content="#040f07"/>
+<title>Karunada-Vanya | ಕರುನಾಡ ವನ್ಯ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+/* ── Design Tokens ─────────────────────────────────────────────── */
+:root{
+  --gd:#040f07;--gd2:#061a0c;--gm:#0a2e18;--gb:#0f4d28;--ge:#1a7a40;
+  --ga:#22c55e;--am:#c8a97e;--br:#5c3d1e;
+  --tx:#e8f5ef;--tx2:#9dbfad;--tx3:#6b9980;
+  --red:#ef4444;--orange:#f97316;--yellow:#eab308;
+  --card-bg:rgba(15,77,40,0.15);--card-border:rgba(34,197,94,0.12);
+  --radius:16px;--radius-sm:10px;
+}
+*{box-sizing:border-box;margin:0;padding:0;font-family:'DM Sans',sans-serif;-webkit-tap-highlight-color:transparent;}
+h1,h2,h3,.serif{font-family:'Playfair Display',serif;}
+body{background:var(--gd);color:var(--tx);overflow-x:hidden;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeInFast{from{opacity:0}to{opacity:1}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+@keyframes alertSlide{from{opacity:0;transform:translateX(-16px)}to{opacity:1;transform:translateX(0)}}
+@keyframes ping{0%{transform:scale(1);opacity:1}75%,100%{transform:scale(2.2);opacity:0}}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes toastIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes offlinePulse{0%,100%{background:rgba(239,68,68,0.12)}50%{background:rgba(239,68,68,0.22)}}
+@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+@keyframes cardPop{from{opacity:0;transform:scale(0.95) translateY(10px)}to{opacity:1;transform:scale(1) translateY(0)}}
+@keyframes progressFill{from{width:0}to{width:var(--target-w)}}
+.fade-in{animation:fadeIn 0.4s ease forwards;}
+.float{animation:float 3s ease-in-out infinite;}
+button:active{transform:scale(0.97);}
+::-webkit-scrollbar{width:0;height:0;}
+.toast{
+  position:fixed;bottom:90px;left:50%;transform:translateX(-50%);
+  background:#14532d;border:1px solid #22c55e;border-radius:12px;
+  padding:12px 20px;font-size:13px;color:#e8f5ef;z-index:9999;
+  animation:toastIn 0.3s ease;white-space:nowrap;pointer-events:none;
+  display:flex;align-items:center;gap:8px;max-width:90vw;
+}
+.toast.error{background:#450a0a;border-color:#ef4444;}
+.spinner{width:20px;height:20px;border:2px solid rgba(34,197,94,0.2);
+  border-top-color:#22c55e;border-radius:50%;animation:spin 0.8s linear infinite;flex-shrink:0;}
+.offline-banner{background:rgba(239,68,68,0.12);border-bottom:1px solid rgba(239,68,68,0.3);
+  padding:8px 16px;text-align:center;font-size:12px;color:#fca5a5;animation:offlinePulse 2s ease infinite;}
+.auth-banner{background:linear-gradient(135deg,rgba(10,46,24,0.9),rgba(4,15,7,0.95));
+  border-bottom:1px solid rgba(34,197,94,0.15);padding:10px 16px;display:flex;align-items:center;gap:10px;font-size:13px;color:var(--tx2);}
+.auth-avatar{width:28px;height:28px;border-radius:50%;border:1.5px solid var(--ga);}
+.auth-btn{margin-left:auto;background:rgba(34,197,94,0.15);border:1px solid rgba(34,197,94,0.3);
+  color:var(--ga);padding:5px 14px;border-radius:20px;font-size:12px;cursor:pointer;transition:all 0.2s;font-weight:500;}
+.auth-btn:hover{background:rgba(34,197,94,0.25);}
+.auth-btn.sign-in{background:rgba(34,197,94,0.2);color:#fff;}
+.emergency-banner{background:linear-gradient(90deg,rgba(239,68,68,0.15),rgba(220,38,38,0.1));
+  border-bottom:1px solid rgba(239,68,68,0.3);padding:10px 16px;display:flex;align-items:center;gap:8px;
+  font-size:12px;cursor:pointer;animation:alertSlide 0.4s ease;}
+.stat-card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:var(--radius-sm);padding:16px;text-align:center;}
+.stat-num{font-size:28px;font-weight:700;color:var(--ga);}
+.stat-label{font-size:11px;color:var(--tx3);margin-top:4px;}
+.report-card{background:var(--card-bg);border:1px solid var(--card-border);
+  border-radius:var(--radius);padding:14px 16px;margin-bottom:8px;animation:fadeIn 0.3s ease forwards;}
+.kv-input{width:100%;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);
+  border-radius:10px;padding:10px 14px;color:var(--tx);font-size:14px;outline:none;transition:border-color 0.2s;}
+.kv-input:focus{border-color:rgba(34,197,94,0.4);}
+.kv-input::placeholder{color:var(--tx3);}
+select.kv-input option{background:#0a2e18;}
+textarea.kv-input{resize:vertical;min-height:80px;}
+.kv-btn{background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;
+  border:none;border-radius:12px;padding:12px 24px;font-size:14px;font-weight:600;cursor:pointer;transition:all 0.2s;}
+.kv-btn:hover{opacity:0.9;}
+.kv-btn:disabled{opacity:0.5;cursor:not-allowed;}
+.kv-btn.danger{background:linear-gradient(135deg,#ef4444,#dc2626);}
+.kv-btn.ghost{background:transparent;border:1px solid rgba(34,197,94,0.3);color:var(--ga);}
+.kv-btn.sm{padding:7px 14px;font-size:12px;}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.75);
+  z-index:1000;display:flex;align-items:flex-end;justify-content:center;animation:fadeIn 0.2s ease;}
+.modal-sheet{background:#061a0c;border-radius:24px 24px 0 0;
+  border-top:1px solid rgba(34,197,94,0.2);width:100%;max-width:900px;
+  max-height:92vh;overflow-y:auto;padding:24px 20px 48px;animation:fadeIn 0.3s ease;}
+.search-wrap{position:relative;}
+.search-wrap input{padding-left:36px;}
+.search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:14px;pointer-events:none;color:var(--tx3);}
+.district-card{background:var(--card-bg);border:1px solid var(--card-border);
+  border-radius:12px;padding:12px 14px;margin-bottom:8px;display:flex;align-items:center;gap:12px;animation:fadeIn 0.3s ease;}
+/* Learning Cards */
+.learn-card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:16px;
+  overflow:hidden;animation:cardPop 0.4s ease forwards;cursor:pointer;transition:transform 0.2s,border-color 0.2s;}
+.learn-card:hover,.learn-card:active{transform:scale(0.98);border-color:rgba(34,197,94,0.3);}
+.learn-banner{background:linear-gradient(135deg,rgba(34,197,94,0.2),rgba(15,77,40,0.4));
+  border:1px solid rgba(34,197,94,0.2);border-radius:16px;padding:20px;
+  margin-bottom:12px;cursor:pointer;position:relative;overflow:hidden;transition:all 0.2s;}
+.learn-banner::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent,rgba(34,197,94,0.05));}
+.learn-banner:hover{transform:translateY(-2px);border-color:rgba(34,197,94,0.35);}
+.shimmer{background:linear-gradient(90deg,rgba(255,255,255,0.03) 25%,rgba(255,255,255,0.08) 50%,rgba(255,255,255,0.03) 75%);
+  background-size:200% 100%;animation:shimmer 1.5s infinite;}
+.progress-bar-wrap{height:4px;background:rgba(255,255,255,0.08);border-radius:2px;overflow:hidden;}
+.progress-bar{height:100%;border-radius:2px;background:linear-gradient(90deg,#22c55e,#16a34a);transition:width 0.6s ease;}
+.tag-chip{display:inline-block;background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.2);
+  color:#22c55e;border-radius:20px;padding:3px 10px;font-size:10px;font-weight:500;margin:2px;}
+.badge-pill{display:inline-flex;align-items:center;gap:4px;border-radius:20px;padding:3px 10px;font-size:10px;font-weight:600;}
+.verified-badge{background:rgba(34,197,94,0.15);color:#22c55e;border:1px solid rgba(34,197,94,0.3);}
+.pending-badge{background:rgba(234,179,8,0.15);color:#eab308;border:1px solid rgba(234,179,8,0.3);}
+.active-badge{background:rgba(249,115,22,0.15);color:#f97316;border:1px solid rgba(249,115,22,0.3);}
+.fact-card{background:linear-gradient(135deg,rgba(15,77,40,0.3),rgba(10,46,24,0.5));
+  border:1px solid rgba(34,197,94,0.15);border-radius:14px;padding:16px;margin-bottom:8px;animation:fadeIn 0.3s ease;}
+</style>
+</head>
+<body>
+<div id="app-root" style="min-height:100vh;max-width:900px;margin:0 auto;">
+  <!-- Inline splash — shown immediately, no JS needed; React replaces it on mount -->
+  <div id="kv-splash" style="
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    min-height:100vh;background:#040f07;gap:20px;padding:24px;text-align:center;">
+    <div style="font-size:56px;animation:float 3s ease-in-out infinite;">🐾</div>
+    <div style="font-family:'Playfair Display',serif;font-size:22px;color:#e8f5ef;font-weight:700;line-height:1.3;">
+      Karunada Vanyaa<br/>
+      <span style="font-size:18px;color:#9dbfad;">ಕರುನಾಡ ವನ್ಯ</span>
+    </div>
+    <div style="width:40px;height:40px;border:3px solid rgba(34,197,94,0.2);
+      border-top-color:#22c55e;border-radius:50%;animation:spin 0.9s linear infinite;"></div>
+    <div style="font-size:13px;color:#6b9980;">Loading Karnataka Wildlife App…</div>
+  </div>
+</div>
+
+<!-- ── Global error guard: catches any script crash → visible fallback, never blank ── -->
+<script>
+(function(){
+  function _showFatalError(msg){
+    var splash=document.getElementById('kv-splash');
+    if(splash){
+      splash.innerHTML=
+        '<div style="display:flex;flex-direction:column;align-items:center;gap:16px;padding:32px;">'
+        +'<div style="font-size:48px;">⚠️</div>'
+        +'<div style="font-size:18px;color:#e8f5ef;font-weight:600;">Something went wrong</div>'
+        +'<div style="font-size:13px;color:#9dbfad;max-width:280px;line-height:1.6;">'+msg+'</div>'
+        +'<button onclick="window.location.reload()" style="'
+        +'margin-top:8px;padding:12px 28px;background:linear-gradient(135deg,#22c55e,#16a34a);'
+        +'color:#fff;border:none;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer;">Retry</button>'
+        +'</div>';
+    }
+  }
+  window.addEventListener('error',function(e){
+    // Ignore CDN sub-resource failures handled individually below
+    if(e&&e.target&&e.target.tagName==='SCRIPT'&&(e.target.src||'').includes('cdnjs')){return;}
+    if(e&&e.message&&e.message.toLowerCase().indexOf('script error')>-1){return;}
+    console.error('[KV] Uncaught error:',e.message);
+  });
+  window.addEventListener('unhandledrejection',function(e){
+    console.error('[KV] Unhandled promise rejection:',e.reason);
+  });
+  // Expose helper so CDN onerror callbacks can call it
+  window._kvFatalError=_showFatalError;
+})();
+</script>
+
+<!-- Firebase v10 ES module -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+  getFirestore,collection,addDoc,setDoc,updateDoc,deleteDoc,
+  doc,query,orderBy,where,limit,onSnapshot,serverTimestamp,
+  getDocs,getDoc,increment,Timestamp,
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import {
+  getAuth,GoogleAuthProvider,signInWithPopup,signInWithRedirect,
+  getRedirectResult,signOut,onAuthStateChanged,
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+// ── Firebase init ──────────────────────────────────────────────────────
+const firebaseConfig = {
+  apiKey:            "AIzaSyC4YGX93KeHyFFzUuqMLMDRmOuYfmKIq3w",
+  authDomain:        "karunada-vanya-f1c10.firebaseapp.com",
+  projectId:         "karunada-vanya-f1c10",
+  storageBucket:     "karunada-vanya-f1c10.firebasestorage.app",
+  messagingSenderId: "369967972894",
+  appId:             "1:369967972894:web:456935f8fbfd7337e8e40f",
+  measurementId:     "G-VB735XKJ3R",
+};
+const app = initializeApp(firebaseConfig);
+const db  = getFirestore(app);
+const auth = getAuth(app);
+const googleProvider = new GoogleAuthProvider();
+googleProvider.addScope("profile");
+googleProvider.addScope("email");
+
+const ADMIN_EMAIL = "karthiikkp2002@gmail.com";
+
+const COL = {
+  REPORTS:   "wildlife_reports",
+  USERS:     "users",
+  ALERTS:    "emergency_alerts",
+  FOREST:    "forest_updates",
+  LOGS:      "admin_logs",
+  LEARNING:  "learning_modules",
+  PROGRESS:  "learning_progress",
+  COMMENTS:  "report_comments",
+  STATUS_LOGS:"report_status_logs",
+  BOOKMARKS: "learning_bookmarks",
+};
+
+async function _log(action, targetId, actorUid, meta={}) {
+  try { await addDoc(collection(db, COL.LOGS), { action,targetId,actorUid,meta,createdAt:serverTimestamp() }); } catch {}
+}
+
+// ── Auth ──────────────────────────────────────────────────────────────
+// Detect Android WebView — popup auth won't work there, use redirect
+function _isAndroidWebView() {
+  const ua = navigator.userAgent || "";
+  return (ua.includes("Android") && (ua.includes(" wv)") || !ua.includes("Chrome/")));
+}
+
+async function _upsertProfile(u) {
+  const userRef = doc(db, COL.USERS, u.uid);
+  const snap    = await getDoc(userRef);
+  const role    = u.email === ADMIN_EMAIL ? "admin" : "public";
+  if (!snap.exists()) {
+    await setDoc(userRef, {
+      uid: u.uid, displayName: u.displayName||"Wildlife Guardian",
+      email: u.email, photoURL: u.photoURL||null,
+      role, reportsCount:0, bookmarks:[],
+      createdAt: serverTimestamp(), lastLoginAt: serverTimestamp(),
+    });
+  } else {
+    const updates = { lastLoginAt: serverTimestamp() };
+    if (u.email === ADMIN_EMAIL && snap.data().role !== "admin") updates.role = "admin";
+    await updateDoc(userRef, updates);
+  }
+  return u;
+}
+
+async function signInGoogle() {
+  try {
+    if (_isAndroidWebView()) {
+      // In Android WebView, neither signInWithPopup nor signInWithRedirect work
+      // because Google blocks OAuth flows inside embedded WebViews for security.
+      // We surface a clear error so the user is never silently stuck.
+      throw Object.assign(new Error(
+        "Google Sign-In is not supported inside this app's WebView. " +
+        "This is a Google security restriction. Anonymous reporting still works."
+      ), { code: "auth/webview-not-supported" });
+    }
+    const result = await signInWithPopup(auth, googleProvider);
+    return await _upsertProfile(result.user);
+  } catch(e) {
+    if (e.code === "auth/popup-closed-by-user" ||
+        e.code === "auth/cancelled-popup-request") return null;
+    throw e;
+  }
+}
+async function signOutUser() { await signOut(auth); }
+
+// getRedirectResult is a no-op in WebView (redirect flow not used) but kept
+// here as a safety call for browser contexts.
+(async () => {
+  try {
+    const result = await getRedirectResult(auth);
+    if (result?.user) await _upsertProfile(result.user);
+  } catch {}
+})();
+
+// ── Reports ───────────────────────────────────────────────────────────
+async function submitReport(data, user) {
+  const payload = {
+    animalId:     data.animalId||"unknown",
+    animalName:   data.animalName||"Unknown",
+    animalEmoji:  data.animalEmoji||"🐾",
+    severity:     data.severity||"medium",
+    zone:         data.zone||"",
+    description:  data.description||"",
+    imageURL:     data.imageURL||null,
+    location:     data.location||"Karnataka",
+    district:     data.district||"Unknown",
+    placeName:    data.placeName||"",
+    latitude:     data.latitude||null,
+    longitude:    data.longitude||null,
+    uid:          user?.uid||null,
+    reporterName: user?.displayName||"Anonymous",
+    reporterEmail:user?.email||null,
+    status:       "pending",
+    verified:     false,
+    verifiedBy:   null,
+    verifiedAt:   null,
+    createdAt:    serverTimestamp(),
+    updatedAt:    serverTimestamp(),
+  };
+  const ref = await addDoc(collection(db, COL.REPORTS), payload);
+  if (user?.uid) {
+    try { await updateDoc(doc(db,COL.USERS,user.uid),{reportsCount:increment(1)}); } catch{}
+  }
+  await addDoc(collection(db,COL.STATUS_LOGS),{
+    reportId:ref.id, status:"pending", action:"submitted",
+    actorUid:user?.uid||"anon", actorName:user?.displayName||"Anonymous",
+    createdAt:serverTimestamp()
+  });
+  await _log("report_submitted",ref.id,user?.uid||"anon",{animalName:payload.animalName,severity:payload.severity});
+  return ref.id;
+}
+async function updateReport(id, updates, uid) {
+  await updateDoc(doc(db,COL.REPORTS,id),{...updates,updatedAt:serverTimestamp()});
+  await _log("report_updated",id,uid||"anon",updates);
+}
+function listenReports(filters, cb) {
+  try {
+    const constraints = [orderBy("createdAt","desc")];
+    if (filters.severity) constraints.unshift(where("severity","==",filters.severity));
+    if (filters.district) constraints.unshift(where("district","==",filters.district));
+    if (filters.status)   constraints.unshift(where("status","==",filters.status));
+    if (filters.uid)      constraints.unshift(where("uid","==",filters.uid));
+    if (filters.verified !== undefined) constraints.unshift(where("verified","==",filters.verified));
+    constraints.push(limit(filters.limitCount||60));
+    const q = query(collection(db,COL.REPORTS),...constraints);
+    return onSnapshot(q, snap=>{
+      cb(snap.docs.map(d=>({id:d.id,...d.data(),
+        createdAt:d.data().createdAt?.toMillis?.()||Date.now(),
+        updatedAt:d.data().updatedAt?.toMillis?.()||Date.now(),
+      })),null);
+    }, err=>cb([],err));
+  } catch(err) { cb([],err); return()=>{}; }
+}
+async function adminUpdateReport(id,updates,adminUid) {
+  const extra = {};
+  if (updates.verified === true) { extra.verifiedBy=adminUid; extra.verifiedAt=serverTimestamp(); }
+  await updateDoc(doc(db,COL.REPORTS,id),{...updates,...extra,updatedAt:serverTimestamp()});
+  await addDoc(collection(db,COL.STATUS_LOGS),{
+    reportId:id, ...updates, actorUid:adminUid,
+    action:"admin_update", createdAt:serverTimestamp()
+  });
+  await _log("admin_update",id,adminUid,updates);
+}
+async function deleteReport(id,adminUid) {
+  await deleteDoc(doc(db,COL.REPORTS,id));
+  await _log("report_deleted",id,adminUid);
+}
+
+// ── Alerts ────────────────────────────────────────────────────────────
+function listenAlerts(cb) {
+  try {
+    const now = Timestamp.now();
+    const q = query(collection(db,COL.ALERTS),
+      where("status","==","active"),where("expiresAt",">",now),
+      orderBy("expiresAt","asc"),limit(20));
+    return onSnapshot(q, snap=>{
+      const pw={critical:4,high:3,medium:2,low:1};
+      const alerts=snap.docs.map(d=>({id:d.id,...d.data(),
+        createdAt:d.data().createdAt?.toMillis?.()||Date.now(),
+        expiresAt:d.data().expiresAt?.toMillis?.()||0,
+      })).sort((a,b)=>{
+        const diff=(pw[b.priority]||1)-(pw[a.priority]||1);
+        return diff!==0?diff:b.createdAt-a.createdAt;
+      });
+      cb(alerts);
+    },()=>cb([]));
+  } catch { cb([]); return()=>{}; }
+}
+async function createAlert(data, user) {
+  const expiresAtMs=Date.now()+(data.expiryHours||12)*3600000;
+  const ref=await addDoc(collection(db,COL.ALERTS),{
+    title:data.title||"Alert", message:data.message||"",
+    priority:data.priority||"high", district:data.district||"Statewide",
+    animalEmoji:data.animalEmoji||"⚠️", status:"active",
+    createdBy:user.uid, createdByName:user.displayName||"Admin",
+    createdAt:serverTimestamp(), expiresAt:Timestamp.fromMillis(expiresAtMs), updatedAt:serverTimestamp(),
+  });
+  await _log("alert_created",ref.id,user.uid);
+  return ref.id;
+}
+async function resolveAlert(id,uid) {
+  await updateDoc(doc(db,COL.ALERTS,id),{status:"resolved",resolved:true,resolvedBy:uid,updatedAt:serverTimestamp()});
+  await _log("alert_resolved",id,uid);
+}
+
+// ── Forest updates ────────────────────────────────────────────────────
+function listenForestUpdates(cb, category) {
+  try {
+    const constraints=[orderBy("createdAt","desc"),limit(30)];
+    if(category) constraints.unshift(where("category","==",category));
+    return onSnapshot(query(collection(db,COL.FOREST),...constraints),snap=>{
+      cb(snap.docs.map(d=>({id:d.id,...d.data(),createdAt:d.data().createdAt?.toMillis?.()||Date.now()})));
+    },()=>cb([]));
+  } catch { cb([]); return()=>{}; }
+}
+async function postForestUpdate(data, user) {
+  const ref=await addDoc(collection(db,COL.FOREST),{
+    title:data.title||"Update", body:data.body||"",
+    category:data.category||"conservation", district:data.district||"Statewide",
+    imageURL:data.imageURL||null, tags:data.tags||[],
+    authorUid:user.uid, authorName:user.displayName||"Admin",
+    views:0, likes:0, createdAt:serverTimestamp(), updatedAt:serverTimestamp(),
+  });
+  await _log("forest_update_posted",ref.id,user.uid);
+  return ref.id;
+}
+async function deleteForestUpdate(id,uid) {
+  await deleteDoc(doc(db,COL.FOREST,id));
+  await _log("forest_update_deleted",id,uid);
+}
+
+// ── Learning modules ──────────────────────────────────────────────────
+function listenLearningModules(cb, filters={}) {
+  try {
+    const constraints=[orderBy("sortOrder","asc"),limit(50)];
+    if(filters.category) constraints.unshift(where("category","==",filters.category));
+    if(filters.featured) constraints.unshift(where("featured","==",true));
+    return onSnapshot(query(collection(db,COL.LEARNING),...constraints),snap=>{
+      cb(snap.docs.map(d=>({id:d.id,...d.data(),createdAt:d.data().createdAt?.toMillis?.()||Date.now()})));
+    },()=>cb([]));
+  } catch { cb([]); return()=>{}; }
+}
+async function getLearningModule(id) {
+  const snap=await getDoc(doc(db,COL.LEARNING,id));
+  return snap.exists()?{id:snap.id,...snap.data()}:null;
+}
+async function saveLearningModule(data, user, existingId=null) {
+  const payload = {
+    title:data.title||"Module", summary:data.summary||"",
+    content:data.content||"", category:data.category||"wildlife",
+    difficulty:data.difficulty||"beginner", duration:data.duration||5,
+    emoji:data.emoji||"📚", imageEmoji:data.imageEmoji||"🌿",
+    tags:data.tags||[], district:data.district||"Statewide",
+    featured:data.featured||false, published:data.published!==false,
+    sortOrder:data.sortOrder||99, facts:data.facts||[],
+    authorUid:user.uid, authorName:user.displayName||"Admin",
+    updatedAt:serverTimestamp(),
+  };
+  if (existingId) {
+    await updateDoc(doc(db,COL.LEARNING,existingId),payload);
+    return existingId;
+  } else {
+    payload.createdAt=serverTimestamp();
+    payload.viewCount=0;
+    const ref=await addDoc(collection(db,COL.LEARNING),payload);
+    return ref.id;
+  }
+}
+async function deleteLearningModule(id,uid) {
+  await deleteDoc(doc(db,COL.LEARNING,id));
+  await _log("module_deleted",id,uid);
+}
+
+// ── Progress tracking ─────────────────────────────────────────────────
+async function markProgress(uid, moduleId, pct) {
+  if(!uid) return;
+  const key=`${uid}_${moduleId}`;
+  await setDoc(doc(db,COL.PROGRESS,key),{
+    uid, moduleId, pct, updatedAt:serverTimestamp()
+  },{merge:true});
+}
+async function getUserProgress(uid) {
+  if(!uid) return {};
+  const snap=await getDocs(query(collection(db,COL.PROGRESS),where("uid","==",uid)));
+  const map={};
+  snap.docs.forEach(d=>{ map[d.data().moduleId]=d.data().pct||0; });
+  return map;
+}
+async function toggleBookmark(uid, moduleId, isBookmarked) {
+  if(!uid) return;
+  const userRef=doc(db,COL.USERS,uid);
+  const snap=await getDoc(userRef);
+  if(!snap.exists()) return;
+  const bookmarks=snap.data().bookmarks||[];
+  const updated=isBookmarked?bookmarks.filter(b=>b!==moduleId):[...bookmarks,moduleId];
+  await updateDoc(userRef,{bookmarks:updated});
+  return updated;
+}
+
+// ── Dashboard stats ───────────────────────────────────────────────────
+function listenDashboardStats(cb) {
+  return onSnapshot(
+    query(collection(db,COL.REPORTS),orderBy("createdAt","desc"),limit(200)),
+    snap=>{
+      const reports=snap.docs.map(d=>({...d.data()}));
+      const districtMap={};
+      for(const r of reports){
+        const d=r.district||"Unknown";
+        if(!districtMap[d]) districtMap[d]={district:d,total:0,critical:0,active:0,verified:0,animals:new Set()};
+        districtMap[d].total++;
+        if(r.severity==="critical") districtMap[d].critical++;
+        if(r.status==="active")     districtMap[d].active++;
+        if(r.verified)              districtMap[d].verified++;
+        if(r.animalName) districtMap[d].animals.add(r.animalName);
+      }
+      const districts=Object.values(districtMap)
+        .map(d=>({...d,animals:[...d.animals]}))
+        .sort((a,b)=>b.total-a.total);
+      cb({
+        total:reports.length, active:reports.filter(r=>r.status==="active").length,
+        verified:reports.filter(r=>r.verified).length, critical:reports.filter(r=>r.severity==="critical").length,
+        pending:reports.filter(r=>r.status==="pending").length, districts,
+      });
+    },()=>{}
+  );
+}
+function exportCSV(reports) {
+  const headers=["ID","Animal","Severity","Zone","District","Place","Description","Status","Verified","Reporter","Lat","Lng","Created"];
+  const rows=reports.map(r=>[
+    r.id,r.animalName,r.severity,r.zone,r.district,r.placeName||r.location||"",
+    `"${(r.description||"").replace(/"/g,'""')}"`,r.status,r.verified?"Yes":"No",
+    r.reporterName,r.latitude||"",r.longitude||"",new Date(r.createdAt).toLocaleString("en-IN"),
+  ]);
+  const csv=[headers,...rows].map(r=>r.join(",")).join("\n");
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv;charset=utf-8;"}));
+  a.download=`kv-reports-${Date.now()}.csv`;a.click();URL.revokeObjectURL(a.href);
+}
+
+// ── Seed learning modules ─────────────────────────────────────────────
+async function seedLearningModules(adminUid, adminName) {
+  const exists=await getDocs(query(collection(db,COL.LEARNING),limit(1)));
+  if(!exists.empty) return;
+  const modules=[
+    {sortOrder:1,featured:true,category:"wildlife",difficulty:"beginner",duration:5,emoji:"🐯",
+     title:"Bengal Tiger: Karnataka's Crown Jewel",
+     summary:"Explore the life, habitat, and conservation status of Bengal Tigers in Karnataka's forests.",
+     content:"Karnataka is home to over 300 Bengal Tigers, making it one of the most important tiger habitats in the world. The Bandipur and Nagarhole National Parks together form the Nilgiri Biosphere Reserve — a critical corridor for tiger movement. Tigers are apex predators that maintain ecological balance by controlling herbivore populations. Each tiger has a unique stripe pattern, like a fingerprint. Adult males patrol territories of 60–100 km². Female tigers raise cubs for 2–3 years, teaching them to hunt. Karnataka's Project Tiger initiative has been instrumental in increasing tiger populations from a mere 37 in 1973 to over 300 today.",
+     tags:["Tiger","Big Cats","Bandipur","Conservation"],
+     facts:["A group of tigers is called a streak or ambush","Tigers can jump up to 10 meters in a single bound","Bengal Tigers can swim up to 30 km in a day","Tiger stripes extend to the skin, not just fur"],
+     district:"Mysuru"},
+    {sortOrder:2,featured:true,category:"wildlife",difficulty:"beginner",duration:6,emoji:"🐘",
+     title:"Asian Elephants: Gentle Giants of the Ghats",
+     summary:"Discover the behaviour, ecology, and human-elephant conflict challenges in Karnataka.",
+     content:"Karnataka supports approximately 6,000–7,000 Asian Elephants — nearly one-quarter of the global population. Found primarily in the Western Ghats, elephants are keystone species that shape entire ecosystems. They create water holes used by other animals, spread seeds over vast distances, and clear vegetation to create grasslands. Elephant corridors — strips of forest connecting larger protected areas — are critical for maintaining genetic diversity. Human-elephant conflict is a major challenge, especially in districts like Mysuru, Kodagu, and Hassan where agricultural lands border forest areas. Community-based early warning systems have reduced conflict incidents significantly.",
+     tags:["Elephant","Western Ghats","Corridor","HEC"],
+     facts:["Elephants can detect infrasound from 10 km away","An elephant's brain weighs 5 kg — the largest of any land animal","Elephants mourn their dead and have graveyards","Karnataka has the highest elephant population of any Indian state"],
+     district:"Hassan"},
+    {sortOrder:3,featured:false,category:"coexistence",difficulty:"intermediate",duration:8,emoji:"🤝",
+     title:"Living with Wildlife: A Community Guide",
+     summary:"Practical strategies for communities living near forest boundaries to reduce conflict and stay safe.",
+     content:"Human-wildlife conflict (HWC) is one of the greatest conservation challenges facing Karnataka today. As forests shrink and wildlife populations recover, encounters between humans and wild animals are increasing. Understanding animal behaviour is the first step toward coexistence. Never run from a wild animal — it triggers predatory instinct. Make noise while walking in forest areas to avoid surprising animals. Keep crops protected using solar-powered electric fencing, which has proven 90% effective. Report sightings immediately using this app to alert forest officials and local communities. Communities that participate in conservation earn eco-tourism revenue and crop compensation schemes from the Karnataka Forest Department.",
+     tags:["Safety","Coexistence","Community","HWC"],
+     facts:["Chili fences effectively deter elephants","Most tiger attacks occur when tigers feel cornered","Solar fencing reduces crop raids by 90%","Forest dept compensates crop losses up to ₹30,000"],
+     district:"Statewide"},
+    {sortOrder:4,featured:true,category:"biodiversity",difficulty:"beginner",duration:5,emoji:"🦜",
+     title:"Birds of Karnataka: A Birdwatcher's Paradise",
+     summary:"Karnataka hosts over 500 bird species including 25 endemic Western Ghats species.",
+     content:"Karnataka is a birdwatcher's paradise with over 500 recorded bird species. The Western Ghats are a UNESCO World Heritage biodiversity hotspot hosting 25+ endemic bird species found nowhere else on Earth. The Malabar Pied Hornbill, Sri Lanka Frogmouth, and Nilgiri Flycatcher are just a few of the rare gems. The Ranganathittu Bird Sanctuary near Mysuru is famous for its nesting colonies of Painted Storks and Spot-billed Pelicans. Karnataka also lies on major migratory corridors, with thousands of birds arriving every winter from Central Asia and Siberia. The best birding seasons are October–February for winter migrants and June–August for resident breeding.",
+     tags:["Birds","Western Ghats","Birding","Endemic"],
+     facts:["Ranganathittu hosts 200+ bird species","The Malabar Whistling Thrush is known as 'the whistling schoolboy'","Hornbills seal the female inside a tree cavity during nesting","Some migratory birds travel 10,000+ km to reach Karnataka"],
+     district:"Mysuru"},
+    {sortOrder:5,featured:false,category:"law",difficulty:"advanced",duration:10,emoji:"⚖️",
+     title:"Wildlife Protection Laws in India",
+     summary:"Understand your rights, duties, and the legal framework protecting India's wildlife.",
+     content:"The Wildlife Protection Act of 1972 is the cornerstone of India's wildlife conservation framework. Schedule I animals — including tigers, elephants, and leopards — receive the highest protection, with penalties of up to 7 years imprisonment and ₹25,000 fine for poaching. The Forest Rights Act of 2006 recognises the rights of tribal and forest-dwelling communities, ensuring they can continue traditional livelihoods while forests are protected. The Environment Protection Act of 1986 provides overarching powers to regulate activities harmful to wildlife habitats. Under Project Tiger, Critical Tiger Reserves cannot be diverted for any purpose. Karnataka's own wildlife rules extend additional protections to many endemic species.",
+     tags:["Law","WPA","Rights","Protection"],
+     facts:["India has 53 Tiger Reserves under Project Tiger","Poaching Schedule I animals can result in 7-year imprisonment","Forest Rights Act protects 8 crore tribal people","Green benches in High Courts handle wildlife cases"],
+     district:"Statewide"},
+    {sortOrder:6,featured:false,category:"wildlife",difficulty:"beginner",duration:5,emoji:"🐆",
+     title:"Indian Leopard: The Silent Shadow",
+     summary:"Learn about the adaptable and elusive Indian Leopard and its role in Karnataka's ecosystems.",
+     content:"The Indian Leopard (Panthera pardus fusca) is perhaps the most adaptable big cat, found from dense forests to the outskirts of Bengaluru. Karnataka supports a significant population, though exact numbers are hard to determine due to the animal's elusive nature. Unlike tigers, leopards can thrive close to human habitation, which makes them more prone to conflict. They are primarily nocturnal hunters, preying on deer, dogs, and livestock. Leopard attacks on humans are rare but have increased due to habitat fragmentation. When encountering a leopard, stand still, make yourself appear large, and back away slowly. Never run. Karnataka's Sanjay Gandhi Biological Park houses injured leopards rescued from conflict situations.",
+     tags:["Leopard","Big Cats","Adaptation","Night Safari"],
+     facts:["Leopards can carry prey twice their weight up a tree","A leopard's spots are called rosettes","They are the most widely distributed wild cat species","Leopards are strong swimmers"],
+     district:"Kodagu"},
+    {sortOrder:7,featured:true,category:"biodiversity",difficulty:"beginner",duration:6,emoji:"🌿",
+     title:"Western Ghats: Earth's Living Treasure",
+     summary:"Discover why the Western Ghats are one of the world's 8 hottest biodiversity hotspots.",
+     content:"The Western Ghats stretch 1,600 km along India's west coast, passing through Karnataka's Kodagu, Uttara Kannada, and Shivamogga districts. This ancient mountain range is older than the Himalayas and one of Earth's eight biodiversity hotspots. It hosts 7,402 flowering plant species, 139 mammal species, 508 bird species, 179 amphibian species, and 6,000 insect species — many found nowhere else. The region receives 2,000–7,000 mm of rainfall annually, feeding major rivers including the Cauvery, Krishna, and Godavari. Deforestation and climate change threaten this vital ecosystem. Less than 10% of the original forest cover remains.",
+     tags:["Western Ghats","Biodiversity","Hotspot","UNESCO"],
+     facts:["The Western Ghats are 3x older than the Himalayas","60% of flowering plants here are endemic","The Ghats receive the first Indian monsoon rains","108 rivers originate in the Western Ghats"],
+     district:"Kodagu"},
+    {sortOrder:8,featured:false,category:"wildlife",difficulty:"intermediate",duration:7,emoji:"🐻",
+     title:"Sloth Bear: Karnataka's Honey Seeker",
+     summary:"An in-depth look at the Sloth Bear's ecology, threats, and fascinating adaptations.",
+     content:"The Sloth Bear (Melursus ursinus) is one of India's most distinctive and misunderstood carnivores. Found throughout Karnataka's Deccan Plateau and forested areas, they have a shaggy black coat, a distinctive white V-chest marking, and remarkable vacuum-like lips for sucking up termites and ants. Sloth bears are responsible for more human casualties in Karnataka than tigers, primarily because they are unpredictable when surprised. They are excellent climbers and have powerful claws for digging. Female bears carry cubs on their backs — unique among bears globally. Their diet includes fruits, honey, insects, and small vertebrates. Nagarhole and Kudremukh National Parks are good places to spot them from safe distances.",
+     tags:["Sloth Bear","Deccan","Termites","Encounter Safety"],
+     facts:["Sloth bears carry cubs on their backs — unique among bears","They can close their nostrils to keep insects out","A sloth bear can consume 10,000 termites in minutes","Their shaggy fur protects against bee stings"],
+     district:"Chamarajanagara"},
+    {sortOrder:9,featured:false,category:"coexistence",difficulty:"intermediate",duration:7,emoji:"🌾",
+     title:"Crop Protection and Conflict Mitigation",
+     summary:"Effective, affordable methods for farmers to protect crops without harming wildlife.",
+     content:"Farmers in Karnataka's forest-fringe districts face significant losses due to crop raiding by elephants, wild boars, and deer. However, killing or injuring wildlife is illegal and counterproductive. Several community-tested methods have proven effective. Solar-powered electric fencing with alarm systems is the most effective but expensive. Chili-smoke fences (burning dried chili mixed with cow dung) deter elephants effectively. Beehive fences exploit elephants' natural fear of bees. Lighting, drumming, and crackers can temporarily deter animals. Early warning systems using mobile apps allow farmers to mobilize quickly. The Karnataka government offers 90% subsidy on electric fencing and compensation for crop losses up to ₹30,000 per year through the Forest Department.",
+     tags:["Crops","Fencing","Compensation","Farmers"],
+     facts:["Elephants are repelled by the smell of chili","Beehive fences are 80% effective against elephant raids","Karnataka pays ₹30,000 crop compensation annually","600+ solar fencing projects exist across Karnataka"],
+     district:"Kodagu"},
+    {sortOrder:10,featured:false,category:"biodiversity",difficulty:"beginner",duration:5,emoji:"🐢",
+     title:"Reptiles and Amphibians of Karnataka",
+     summary:"Karnataka's remarkable herpetofauna — from king cobras to endemic tree frogs.",
+     content:"Karnataka is a hotspot for reptile and amphibian diversity. The state harbours over 200 reptile species and 100+ amphibian species. The King Cobra — the world's longest venomous snake at up to 5.5 metres — is found in the Western Ghats forests. The Indian Mugger Crocodile inhabits rivers and lakes. The Star Tortoise, once common in Deccan grasslands, is now critically threatened by the pet trade. The Western Ghats are particularly rich in amphibians, with new frog species discovered almost yearly. The Purple Frog (Nasikabatrachus sahyadrensis) — a living fossil — was first discovered in 2003 and looks like nothing else on Earth. Climate change and habitat loss are the primary threats to these cold-blooded treasures.",
+     tags:["Reptiles","Amphibians","King Cobra","Frogs"],
+     facts:["The Purple Frog was only discovered in 2003","King Cobras can raise a third of their body off the ground","Star Tortoises live up to 100 years","Karnataka has 100+ endemic frog species"],
+     district:"Uttara Kannada"},
+    {sortOrder:11,featured:false,category:"conservation",difficulty:"intermediate",duration:8,emoji:"🌱",
+     title:"Reforestation and Habitat Restoration",
+     summary:"How Karnataka is restoring degraded forest lands and wildlife corridors.",
+     content:"Karnataka has lost nearly 40% of its original forest cover over the past century. However, major restoration efforts are underway. The Karnataka Forest Department plants over 30 million trees annually under various schemes. The Compensatory Afforestation Fund Management and Planning Authority (CAMPA) channels funds from infrastructure projects into forest restoration. Wildlife corridors — critical strips of forest connecting protected areas — are being restored through land acquisition and encroachment removal. The Mysuru-Kodagu corridor connects Bandipur and Nagarhole, allowing tigers, elephants, and leopards to move freely. Community forest management programs empower local communities to protect and regenerate village forests. Invasive species like Lantana and Eucalyptus are being removed to allow native vegetation to regenerate.",
+     tags:["Reforestation","Corridors","CAMPA","Restoration"],
+     facts:["Karnataka plants 30 million trees annually","Lantana covers 30% of forest undergrowth in South India","Wildlife corridors reduce inbreeding in isolated populations","The Nilgiri Biosphere Reserve spans 5,520 sq km"],
+     district:"Mysuru"},
+    {sortOrder:12,featured:true,category:"wildlife",difficulty:"beginner",duration:6,emoji:"🦁",
+     title:"Lions and Their Karnataka Connection",
+     summary:"The history of Asiatic Lions in Karnataka and current conservation parallels with Gujarat.",
+     content:"Asiatic Lions once roamed across much of Karnataka before being hunted to extinction in the region. Today, the last wild population of about 700 Asiatic Lions lives only in the Gir Forest of Gujarat. Karnataka has been proposed as a secondary habitat for reintroduction at Palpur-Kuno Wildlife Sanctuary in Madhya Pradesh. Historical records show lions were common in Karnataka's Deccan grasslands as recently as the 1880s. The Karnataka Forest Department has been studying the feasibility of introducing cheetahs — also extinct in India — into the grasslands of Raichur district. Learning from the Gujarat lion conservation success story provides valuable lessons for bringing this magnificent predator back to Karnataka.",
+     tags:["Lion","Asiatic","Gujarat","Reintroduction"],
+     facts:["The Asiatic lion's population increased from 177 in 1968 to 700+ today","Male Asiatic lions have smaller manes than African lions","Lions are the only truly social cat species","Cheetahs were reintroduced to India in 2022 after 70 years"],
+     district:"Raichur"},
+    {sortOrder:13,featured:false,category:"coexistence",difficulty:"beginner",duration:5,emoji:"🚶",
+     title:"Forest Trail Safety Guide",
+     summary:"Essential safety knowledge for trekkers, villagers, and workers in or near forests.",
+     content:"Karnataka's forests attract thousands of trekkers, pilgrims, and workers annually. Knowing how to behave in wildlife territory can save your life. Always trek in groups — animals rarely attack groups. Wear muted colours; avoid bright red or white. Make noise while walking — hum, talk, clap — to alert animals to your presence. Carry a torch at night and check under logs before sitting. If you encounter a bear, speak calmly, wave your arms, and back away slowly. If an elephant charges, move perpendicular to its direction and hide behind large trees. Never disturb a snake; most bites occur when people try to kill or handle snakes. Carry a first aid kit with antivenom information. Know the forest helpline number: 1926.",
+     tags:["Safety","Trekking","Bears","Snake Safety"],
+     facts:["80% of snakebites occur when people try to handle snakes","Forest helpline number in India is 1926","Groups of 4+ people are very rarely attacked by predators","Most elephant charges are 'mock charges' — the animal stops short"],
+     district:"Statewide"},
+    {sortOrder:14,featured:false,category:"biodiversity",difficulty:"intermediate",duration:7,emoji:"🐝",
+     title:"Pollinators and Forest Health",
+     summary:"Why bees, butterflies, and other pollinators are essential to Karnataka's forest ecosystems.",
+     content:"Pollinators are the invisible workforce sustaining Karnataka's forests and agriculture. The state hosts over 500 bee species, 350+ butterfly species, and hundreds of moth and fly pollinators. Without pollinators, most of the forest's flowering plants cannot reproduce. Karnataka's Western Ghats butterflies include 53 endemic species, with the Malabar Banded Peacock being among the most spectacular. Colony Collapse Disorder — the mysterious disappearance of honeybee colonies — has been observed in Karnataka's agricultural zones, linked to pesticide use. The Karnataka government's pollinator corridors program plants native flowering species along forest edges to support pollinator populations. Every citizen can help by planting native flowers, avoiding pesticides, and protecting wild bee nests.",
+     tags:["Pollinators","Bees","Butterflies","Ecosystem"],
+     facts:["One-third of human food depends on pollinators","Karnataka has 350+ butterfly species","The Giant Honey Bee builds exposed colonies up to 1m wide","Butterflies navigate using UV patterns invisible to humans"],
+     district:"Uttara Kannada"},
+    {sortOrder:15,featured:false,category:"law",difficulty:"beginner",duration:5,emoji:"📋",
+     title:"How to Report Wildlife Crime",
+     summary:"Step-by-step guide to reporting poaching, trafficking, and habitat destruction.",
+     content:"Wildlife crime reporting is every citizen's duty. Karnataka has several reporting channels. The Forest Helpline 1926 operates 24/7 across all districts. WhatsApp tiplines operated by the Karnataka Forest Department allow photo and video evidence submission. This app (Karunada-Vanya) provides real-time geo-tagged reporting directly to forest officers. For poaching cases, the Wildlife Crime Control Bureau (WCCB) can be contacted at 1800-103-1111. Anonymous reporting is accepted and identity is protected. Document as much as possible — photographs, vehicle numbers, GPS coordinates. Useful evidence includes animal body parts, tracks, snares, or suspicious vehicles near forest areas. Good Samaritan provisions protect reporters from legal liability.",
+     tags:["Crime Reporting","Poaching","WCCB","Anonymous"],
+     facts:["Wildlife crime is the 4th largest global illegal trade","India has 450+ wildlife rescue centres","Ivory trade was globally banned in 1989","Wildlife SOS rescues 2,000+ animals annually in India"],
+     district:"Statewide"},
+    {sortOrder:16,featured:false,category:"wildlife",difficulty:"intermediate",duration:6,emoji:"🐍",
+     title:"Venomous Snakes: Know Before You Go",
+     summary:"Identification, first aid, and prevention for Karnataka's venomous snake encounters.",
+     content:"Karnataka is home to the 'Big Four' venomous snakes responsible for most snakebites: Indian Cobra, Russell's Viper, Saw-scaled Viper, and Common Krait. These species are found across the state, from forests to farms to cities. The King Cobra, though rare, is the world's longest venomous snake. Snake season peaks during monsoon (June–September) when flooding drives snakes toward higher ground and human habitation. Snakebite first aid: immobilize the affected limb, keep below heart level, go immediately to a hospital with anti-venom. Do NOT apply tourniquets, cut the wound, or suck the venom. Karnataka has 50+ government hospitals stocking anti-venom. The state's snakebite protocol uses polyvalent anti-venom effective against all four species.",
+     tags:["Snakes","Venom","First Aid","Monsoon Safety"],
+     facts:["India has 50,000+ snakebite deaths annually","Anti-venom must be given within 2 hours for best effect","Kraits are most active between 11 PM and 4 AM","The King Cobra preys almost exclusively on other snakes"],
+     district:"Statewide"},
+    {sortOrder:17,featured:false,category:"conservation",difficulty:"advanced",duration:10,emoji:"🔬",
+     title:"Camera Trapping and Wildlife Research",
+     summary:"How modern technology is helping scientists monitor and protect Karnataka's wildlife.",
+     content:"Camera trapping has revolutionised wildlife monitoring in Karnataka. Networked camera traps in Bandipur, Nagarhole, and Bhadra tiger reserves have produced the world's most comprehensive tiger population datasets. Individual tigers are identified by their unique stripe patterns using computer vision algorithms. The 2022 tiger census used over 2,000 camera traps across 141 sites in Karnataka alone. Acoustic monitoring detects elephant infrasound calls, allowing early warning of elephant movements. Satellite telemetry collars track individual animals across their home ranges, revealing corridor usage and conflict hotspots. Citizen science apps allow tourists and villagers to contribute sightings to regional wildlife databases. DNA metabarcoding from dung and hair samples identifies species without ever sighting the animal.",
+     tags:["Camera Trap","Research","Technology","Census"],
+     facts:["Karnataka has 2,000+ camera traps in forests","AI identifies individual tigers by stripe patterns","GPS collars track elephants across 200+ km ranges","Citizen scientists contribute 30% of wildlife data globally"],
+     district:"Mysuru"},
+    {sortOrder:18,featured:false,category:"biodiversity",difficulty:"beginner",duration:5,emoji:"🌊",
+     title:"Rivers and Freshwater Ecosystems",
+     summary:"Karnataka's rivers, wetlands, and the extraordinary wildlife they support.",
+     content:"Karnataka's river systems — the Cauvery, Tungabhadra, Kali, and Sharavati — support extraordinary aquatic biodiversity. The Cauvery River is home to the Mahseer, a giant freshwater fish that can grow to 60 kg and is considered a flagship species for river health. The Gangetic River Dolphin has been recorded in the Tungabhadra. Wetlands like the Ranebennur Blackbuck Sanctuary and Kokkare Bellur heronry support enormous numbers of migratory birds. Karnataka's rivers and wetlands are increasingly threatened by sand mining, pollution from agricultural runoff, and dam construction that blocks fish migration routes. The Kali Tiger Reserve protects one of the last undammed river systems in peninsular India.",
+     tags:["Rivers","Wetlands","Mahseer","Freshwater"],
+     facts:["The Mahseer can live 30+ years and grow to 60 kg","Karnataka has 6 major river basins","Ranebennur is India's only Blackbuck sanctuary","Sand mining destroys turtle nesting sites"],
+     district:"Uttara Kannada"},
+    {sortOrder:19,featured:false,category:"coexistence",difficulty:"intermediate",duration:7,emoji:"🏡",
+     title:"Eco-Tourism: Turning Conservation into Livelihood",
+     summary:"How responsible eco-tourism creates economic incentives for wildlife protection.",
+     content:"Karnataka's eco-tourism sector, when managed responsibly, creates powerful economic incentives for wildlife conservation. Bandipur and Nagarhole Tiger Reserves attract over 200,000 visitors annually, generating revenue that supports both conservation and local communities. The Karnataka Eco-Tourism Development Corporation (KSTDC) operates 56 eco-lodges across protected areas. Community homestay programs in Kodagu and Dakshina Kannada allow visitors to experience forest life while supporting local families. Research shows that communities earning income from eco-tourism are 3x more likely to report poaching and protect wildlife corridors. Guidelines for responsible wildlife tourism include: maintain 30m distance from animals, no feeding, no flash photography, no noise. Several villages have formed Wildlife Friendly Enterprise Networks.",
+     tags:["Eco-Tourism","Livelihood","Homestay","Community"],
+     facts:["Bandipur attracts 200,000+ visitors annually","Karnataka has 56 eco-lodges in protected areas","Eco-tourism creates 10x more jobs than logging per hectare","Community lodges return 40% of revenue to local families"],
+     district:"Mysuru"},
+    {sortOrder:20,featured:true,category:"conservation",difficulty:"beginner",duration:6,emoji:"💚",
+     title:"How You Can Help: Citizen Conservation",
+     summary:"Practical actions every Karunatakan can take to protect our natural heritage.",
+     content:"Conservation is not just the job of forest officials — it requires the active participation of every citizen. There are many ways to contribute. Use this app to report wildlife sightings and conflicts in real time. Plant native trees in your garden — local species support 10x more insects than exotic plants. Reduce pesticide use which kills pollinators and poisons waterways. Support local forest communities by buying certified forest products. Spread awareness in your community about wildlife safety and conservation laws. Participate in citizen science projects counting birds, butterflies, and amphibians. Contact your local MLA to support wildlife corridor protection. Donate to Karnataka-based conservation organisations. Boycott wildlife products including exotic pet trade and traditional medicines using animal parts. Every action, however small, contributes to protecting Karnataka's extraordinary natural heritage.",
+     tags:["Citizen Science","Action","Awareness","You Can Help"],
+     facts:["One person's report can save an animal's life","Planting 1 native tree supports 50+ insect species","Spreading awareness online reaches 1,000+ people","Karnataka has 40,000+ registered wildlife volunteers"],
+     district:"Statewide"},
+  ];
+
+  for(const m of modules){
+    await addDoc(collection(db,COL.LEARNING),{
+      ...m, published:true, viewCount:0,
+      createdAt:serverTimestamp(), updatedAt:serverTimestamp(),
+      authorUid:adminUid, authorName:adminName,
+    });
+  }
+  console.log("✅ Seeded 20 learning modules");
+}
+
+window.KV = {
+  db, auth, onAuthStateChanged,
+  // Firestore helpers exposed so React components can use them without dynamic imports
+  getDoc, doc,
+  signInGoogle, signOutUser,
+  submitReport, updateReport, listenReports, adminUpdateReport, deleteReport,
+  listenAlerts, createAlert, resolveAlert,
+  listenForestUpdates, postForestUpdate, deleteForestUpdate,
+  listenLearningModules, getLearningModule, saveLearningModule, deleteLearningModule,
+  markProgress, getUserProgress, toggleBookmark,
+  listenDashboardStats, exportCSV,
+  seedLearningModules,
+  ADMIN_EMAIL,
+};
+console.log("🌿 Karunada-Vanya Firebase v2 initialized");
+</script>
+
+<!-- React UMD — crossorigin enables proper onerror reporting -->
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"
+  crossorigin="anonymous"
+  onerror="window._kvFatalError('Could not load React library. Please check your internet connection and tap Retry.')">
+</script>
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"
+  crossorigin="anonymous"
+  onerror="window._kvFatalError('Could not load React DOM library. Please check your internet connection and tap Retry.')">
+</script>
+<!-- Guard: if React failed to load, stop here so the main script does not crash -->
+<script>
+if(typeof React==='undefined'||typeof ReactDOM==='undefined'){
+  if(window._kvFatalError)
+    window._kvFatalError('React could not be loaded. Please check your internet connection and tap Retry.');
+  throw new Error('[KV] React not loaded — halting.');
+}
+</script>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════════
+   KARUNADA-VANYA v2 — Production React App
+═══════════════════════════════════════════════════════════════════ */
+const {useState,useEffect,useRef,useCallback,useMemo}=React;
+const h=React.createElement;
+
+// ── Constants ──────────────────────────────────────────────────────
+const DANGEROUS_ANIMALS=[
+  {id:'tiger',    name:'Bengal Tiger',        emoji:'🐯',level:'CRITICAL',color:'#ef4444'},
+  {id:'elephant', name:'Asian Elephant',      emoji:'🐘',level:'CRITICAL',color:'#ef4444'},
+  {id:'leopard',  name:'Indian Leopard',      emoji:'🐆',level:'HIGH',   color:'#f97316'},
+  {id:'sloth_bear',name:'Sloth Bear',         emoji:'🐻',level:'HIGH',   color:'#f97316'},
+  {id:'king_cobra',name:'King Cobra',         emoji:'🐍',level:'HIGH',   color:'#f97316'},
+  {id:'gaur',     name:'Indian Bison (Gaur)', emoji:'🦬',level:'MEDIUM', color:'#eab308'},
+  {id:'wild_boar',name:'Wild Boar',           emoji:'🐗',level:'MEDIUM', color:'#eab308'},
+  {id:'mugger_croc',name:'Mugger Crocodile',  emoji:'🐊',level:'CRITICAL',color:'#ef4444'},
+  {id:'monitor',  name:'Bengal Monitor',      emoji:'🦎',level:'LOW',    color:'#22c55e'},
+  {id:'wolf',     name:'Indian Wolf',         emoji:'🐺',level:'HIGH',   color:'#f97316'},
+  {id:'dhole',    name:'Dhole (Wild Dog)',     emoji:'🐕',level:'MEDIUM', color:'#eab308'},
+  {id:'pangolin', name:'Indian Pangolin',     emoji:'🦔',level:'LOW',    color:'#22c55e'},
+  {id:'peafowl',  name:'Indian Peafowl',      emoji:'🦚',level:'LOW',    color:'#22c55e'},
+  {id:'deer',     name:'Spotted Deer',        emoji:'🦌',level:'LOW',    color:'#22c55e'},
+];
+const ZONES=['In the Forest','Near Forest Edge','Village Boundary','Agricultural Field','Road/Highway','River/Waterway','Residential Area'];
+const DISTRICTS=['Mysuru','Kodagu','Hassan','Shivamogga','Uttara Kannada','Dharwad','Bengaluru Rural','Chamarajanagara','Mandya','Tumakuru','Belagavi','Ballari','Dakshina Kannada','Udupi','Chikkamagaluru','Chitradurga','Raichur','Kalaburagi'];
+const SEVERITY_COLORS={critical:'#ef4444',high:'#f97316',medium:'#eab308',low:'#22c55e',pending:'#94a3b8'};
+const FOREST_CATEGORIES=[
+  {id:"conservation",label:"Conservation",emoji:"🌱"},
+  {id:"alert",       label:"Forest Alert", emoji:"🚨"},
+  {id:"sighting",    label:"Rare Sighting",emoji:"👁️"},
+  {id:"research",    label:"Research",     emoji:"🔬"},
+  {id:"community",   label:"Community",    emoji:"🤝"},
+];
+const LEARN_CATEGORIES=[
+  {id:null,          label:"All",          emoji:"🌟"},
+  {id:"wildlife",    label:"Wildlife",     emoji:"🐯"},
+  {id:"biodiversity",label:"Biodiversity", emoji:"🌿"},
+  {id:"coexistence", label:"Coexistence",  emoji:"🤝"},
+  {id:"law",         label:"Laws & Rights",emoji:"⚖️"},
+  {id:"conservation",label:"Conservation", emoji:"🌱"},
+];
+const WILDLIFE_FACTS=[
+  "🐯 Karnataka is home to 300+ Bengal Tigers — the highest density per sq km globally.",
+  "🐘 Asian Elephants can recognise themselves in mirrors, showing self-awareness.",
+  "🌿 The Western Ghats are 3x older than the Himalayas at 150 million years.",
+  "🦜 Ranganathittu hosts India's largest Painted Stork breeding colony.",
+  "🐍 The King Cobra can raise one-third of its body upright — taller than a human child.",
+  "🐆 Leopards can carry prey twice their weight 6 metres up a tree.",
+  "🦋 Karnataka has 350+ butterfly species, including 53 endemic to the Western Ghats.",
+  "🐻 Sloth bears are the only bear species that regularly carry their young on their backs.",
+  "💧 The Cauvery River Mahseer can grow to 60 kg and live for 30+ years.",
+  "🌲 Karnataka plants 30 million trees annually under reforestation programs.",
+  "🎯 Camera traps have identified 350+ individual tigers in Karnataka by stripe patterns.",
+  "🦅 Every October, 5 million flamingos gather at Yelahanka Wetland near Bengaluru.",
+  "🌊 The Kali River in Uttara Kannada is one of India's last undammed major rivers.",
+  "🐊 Mugger Crocodiles can go 6 months without food in dry season.",
+  "🌺 The Neelakurinji flower blooms only once every 12 years in the Shola grasslands.",
+  "🦌 A herd of 400 Spotted Deer can still be found in Bandipur National Park.",
+  "🐢 The Purple Frog of the Western Ghats is a 180-million-year-old living fossil.",
+  "🍯 Wild Honey Bees in the Western Ghats produce 20 distinct floral varieties of honey.",
+  "🐘 Elephant social groups are matriarchal — led by the oldest female who holds 50+ years of memory.",
+  "🔬 DNA from a single strand of elephant hair can identify its family lineage for 3 generations.",
+  "🌿 One acre of Western Ghats forest absorbs 3 tonnes of CO2 per year.",
+  "🦩 The Saras Crane, at 1.8m tall, is India's tallest flying bird.",
+  "🐝 One honeybee hive pollinates 300 million flowers in a single season.",
+  "🌳 A 100-year-old fig tree supports over 1,200 species of insects, birds, and mammals.",
+  "🦚 Peacock feathers contain no blue or green pigment — the colour comes from light diffraction.",
+  "🐯 Tigers mark territory by spraying trees with a mixture that smells like popcorn.",
+  "🏔️ Karnataka's Kudremukh (Horse Face Mountain) gets 7,500mm of rain annually.",
+  "🦎 Bengal Monitor lizards are vital for termite population control across Karnataka.",
+  "🐦 The Indian Roller — Karnataka's state bird — flips mid-air during courtship display.",
+  "🌱 Traditional forest communities in Kodagu have protected sacred groves (devara kadus) for centuries.",
+];
+
+// ── Utilities ─────────────────────────────────────────────────────
+function timeAgo(ms){
+  const m=Math.max(0,Math.floor((Date.now()-ms)/60000));
+  if(m<1)return'Just now';if(m<60)return`${m}m ago`;
+  const hr=Math.floor(m/60);if(hr<24)return`${hr}h ago`;
+  return`${Math.floor(hr/24)}d ago`;
+}
+function capFirst(s){return s?s[0].toUpperCase()+s.slice(1):s;}
+function fmtDuration(min){return min>=60?`${Math.floor(min/60)}h ${min%60?min%60+'m':''}`.trim():`${min} min`;}
+
+// ── Toast ──────────────────────────────────────────────────────────
+function Toast({msg,type,onDone}){
+  useEffect(()=>{const t=setTimeout(onDone,3200);return()=>clearTimeout(t);},[]);
+  return h('div',{className:`toast${type==='error'?' error':''}`},
+    h('span',{},type==='error'?'❌':'✅'),msg);
+}
+function Spinner({size=20}){return h('div',{className:'spinner',style:{width:size,height:size}});}
+function useToast(){
+  const[toast,setToast]=useState(null);
+  const show=(msg,type='success')=>setToast({msg,type,key:Date.now()});
+  const clear=()=>setToast(null);
+  return{toast,show,clear};
+}
+
+// ── useAuth ────────────────────────────────────────────────────────
+function useAuth(){
+  const[user,setUser]=useState(null);
+  const[profile,setProfile]=useState(null);
+  const[authLoading,setAuthLoading]=useState(true);
+
+  useEffect(()=>{
+    const poll=setInterval(()=>{
+      if(window.KV){
+        clearInterval(poll);
+        clearTimeout(kvTimeout);
+        const unsub=window.KV.onAuthStateChanged(window.KV.auth,async fireUser=>{
+          setUser(fireUser);
+          if(fireUser){
+            try{
+              const snap=await window.KV.getDoc(window.KV.doc(window.KV.db,"users",fireUser.uid));
+              if(snap.exists()){
+                setProfile(snap.data());
+                // Seed learning modules on first admin login
+                if(snap.data().role==='admin'){
+                  window.KV.seedLearningModules(fireUser.uid,fireUser.displayName||"Admin").catch(()=>{});
+                }
+              } else setProfile(null);
+            }catch{setProfile(null);}
+          } else setProfile(null);
+          setAuthLoading(false);
+        });
+        window._kvAuthUnsub=unsub;
+      }
+    },100);
+    // Safety timeout — if Firebase never loads (offline/CDN fail), unblock the app after 8 s
+    const kvTimeout=setTimeout(()=>{
+      clearInterval(poll);
+      setAuthLoading(false);
+    },8000);
+    return()=>{clearInterval(poll);clearTimeout(kvTimeout);window._kvAuthUnsub?.();};
+  },[]);
+
+  const[authError,setAuthError]=useState(null);
+  const signIn=async()=>{
+    if(!window.KV)return;
+    setAuthError(null);
+    try{
+      await window.KV.signInGoogle();
+    }catch(e){
+      console.error(e);
+      setAuthError(e.message||'Sign-in failed');
+    }
+  };
+  const signOut=async()=>{if(!window.KV)return;await window.KV.signOutUser();setUser(null);setProfile(null);};
+
+  return{
+    user,profile,authLoading,authError,signIn,signOut,
+    isAdmin:profile?.role==='admin',
+    isRanger:profile?.role==='ranger'||profile?.role==='admin',
+  };
+}
+
+function useOnline(){
+  const[online,setOnline]=useState(navigator.onLine);
+  useEffect(()=>{
+    const on=()=>setOnline(true),off=()=>setOnline(false);
+    window.addEventListener('online',on);window.addEventListener('offline',off);
+    return()=>{window.removeEventListener('online',on);window.removeEventListener('offline',off);};
+  },[]);
+  return online;
+}
+
+// ── AuthHeader ────────────────────────────────────────────────────
+function AuthHeader({user,profile,authLoading,authError,signIn,signOut}){
+  if(authLoading)return h('div',{className:'auth-banner'},h(Spinner,{size:16}),' Loading…');
+  return h('div',{style:{flexDirection:'column',alignItems:'stretch'}},
+    h('div',{className:'auth-banner'},
+      user ? h(React.Fragment,null,
+          user.photoURL&&h('img',{className:'auth-avatar',src:user.photoURL,alt:'avatar'}),
+          h('div',{style:{lineHeight:'1.3'}},
+            h('div',{style:{fontWeight:600,color:'var(--tx)',fontSize:'13px'}},user.displayName||"Guardian"),
+            h('div',{style:{fontSize:'11px',color:'var(--tx3)'}},
+              profile?.role==='admin'?'🛡️ Admin':profile?.role==='ranger'?'🌿 Ranger':'🦋 Guardian')),
+          h('button',{className:'auth-btn',onClick:signOut},'Sign Out'))
+        : h(React.Fragment,null,
+            h('span',{},'Sign in to report wildlife sightings'),
+            h('button',{className:'auth-btn sign-in',onClick:signIn},'🔑 Sign in with Google'))
+    ),
+    authError&&h('div',{style:{
+      background:'rgba(239,68,68,0.1)',borderBottom:'1px solid rgba(239,68,68,0.25)',
+      padding:'6px 16px',fontSize:'11px',color:'#fca5a5',lineHeight:'1.5'}},
+      '⚠️ Sign-in unavailable in this WebView context. You can still submit reports anonymously.')
+  );
+}
+
+// ── EmergencyBanner ───────────────────────────────────────────────
+function EmergencyBanner({alerts,onClick}){
+  const top=alerts[0];if(!top)return null;
+  const colors={critical:'#ef4444',high:'#f97316',medium:'#eab308',low:'#22c55e'};
+  const c=colors[top.priority]||'#f97316';
+  return h('div',{className:'emergency-banner',onClick,
+    style:{borderColor:`${c}55`,background:`rgba(${top.priority==='critical'?'239,68,68':'249,115,22'},0.08)`}},
+    h('span',{style:{animation:'ping 1.5s infinite',display:'inline-block',
+      width:8,height:8,borderRadius:'50%',background:c,flexShrink:0}}),
+    h('span',{style:{fontWeight:600,color:c,fontSize:'12px',marginLeft:4}},
+      (top.animalEmoji||'⚠️')+' '+top.title),
+    h('span',{style:{color:'var(--tx3)',marginLeft:4,fontSize:'11px'}},'— '+top.district),
+    h('span',{style:{marginLeft:'auto',color:c,fontSize:'11px'}},`${alerts.length} alert${alerts.length>1?'s':''}  ›`)
+  );
+}
+
+// ── NavBar ────────────────────────────────────────────────────────
+function NavBar({page,setPage,alertCount}){
+  return h('div',{style:{background:'rgba(4,15,7,0.95)',backdropFilter:'blur(12px)',
+    borderBottom:'1px solid rgba(34,197,94,0.1)',padding:'12px 16px',
+    display:'flex',alignItems:'center',gap:12,position:'sticky',top:0,zIndex:50}},
+    h('span',{style:{fontFamily:'Playfair Display,serif',fontSize:'18px',fontWeight:700,
+      color:'var(--tx)',cursor:'pointer'},onClick:()=>setPage('home')},'🌿 KV'),
+    h('div',{style:{flex:1}}),
+    alertCount>0&&h('div',{
+      style:{background:'rgba(239,68,68,0.2)',border:'1px solid rgba(239,68,68,0.4)',
+        borderRadius:20,padding:'3px 10px',cursor:'pointer',display:'flex',alignItems:'center',gap:4},
+      onClick:()=>setPage('reports')},
+      h('span',{style:{width:6,height:6,borderRadius:'50%',background:'#ef4444',
+        animation:'ping 1.5s infinite',display:'inline-block'}}),
+      h('span',{style:{fontSize:'11px',color:'#fca5a5',fontWeight:600}},`${alertCount} alerts`))
+  );
+}
+
+// ── BottomNav ──────────────────────────────────────────────────────
+function BottomNav({page,setPage,alertCount,isAdmin}){
+  const tabs=[
+    {id:'home',   icon:'🏠',label:'Home',   badge:0},
+    {id:'reports',icon:'📋',label:'Reports',badge:alertCount},
+    {id:'forest', icon:'🌲',label:'Forest', badge:0},
+    {id:'learn',  icon:'📚',label:'Learn',  badge:0},
+    ...(isAdmin?[{id:'admin',icon:'🛡️',label:'Admin',badge:0}]:[]),
+  ];
+  return h('div',{style:{position:'fixed',bottom:0,left:'50%',transform:'translateX(-50%)',
+    width:'100%',maxWidth:900,background:'rgba(4,15,7,0.97)',
+    backdropFilter:'blur(16px)',borderTop:'1px solid rgba(34,197,94,0.15)',
+    display:'flex',zIndex:50}},
+    tabs.map(t=>h('button',{key:t.id,onClick:()=>setPage(t.id),
+      style:{flex:1,border:'none',background:'transparent',padding:'8px 4px',cursor:'pointer',
+        color:page===t.id?'#22c55e':'var(--tx3)',transition:'color 0.2s',position:'relative'}},
+      h('div',{style:{fontSize:20}},t.icon),
+      h('div',{style:{fontSize:'9px',marginTop:2}},t.label),
+      t.badge>0&&h('div',{style:{position:'absolute',top:4,right:'calc(50% - 18px)',
+        background:'#ef4444',color:'#fff',borderRadius:'50%',width:16,height:16,
+        fontSize:'9px',display:'flex',alignItems:'center',justifyContent:'center',fontWeight:700}},
+        t.badge>9?'9+':t.badge)))
+  );
+}
+
+// ── ReportModal ────────────────────────────────────────────────────
+function ReportModal({user,onClose,onSuccess,editReport}){
+  const isEdit=!!editReport;
+  const[form,setForm]=useState(isEdit?{
+    animalId:editReport.animalId||'tiger',
+    severity:editReport.severity||'high',
+    zone:editReport.zone||'Near Forest Edge',
+    district:editReport.district||'Mysuru',
+    placeName:editReport.placeName||'',
+    description:editReport.description||'',
+  }:{animalId:'tiger',severity:'high',zone:'Near Forest Edge',district:'Mysuru',placeName:'',description:''});
+  const[saving,setSaving]=useState(false);
+  const[imgFile,setImgFile]=useState(null);
+  const toast=useToast();
+  const fileRef=useRef();
+
+  function set(k,v){setForm(f=>({...f,[k]:v}));}
+  const animal=DANGEROUS_ANIMALS.find(a=>a.id===form.animalId)||DANGEROUS_ANIMALS[0];
+
+  // Simple base64 image encode for storage (no Firebase Storage needed)
+  async function encodeImage(file){
+    return new Promise(res=>{
+      const reader=new FileReader();
+      reader.onload=e=>res(e.target.result);
+      reader.readAsDataURL(file);
+    });
+  }
+
+  async function handleSubmit(){
+    if(!form.description.trim()){toast.show('Please describe the sighting','error');return;}
+    if(!window.KV){toast.show('Firebase not ready','error');return;}
+    setSaving(true);
+    try{
+      let lat=null,lng=null;
+      try{
+        const pos=await new Promise((res,rej)=>
+          navigator.geolocation.getCurrentPosition(res,rej,{timeout:5000}));
+        lat=pos.coords.latitude;lng=pos.coords.longitude;
+      }catch{}
+      let imageURL=isEdit?editReport.imageURL:null;
+      if(imgFile){
+        // Store small base64 preview (first 50kb)
+        try{imageURL=await encodeImage(imgFile);}catch{}
+      }
+      if(isEdit){
+        await window.KV.updateReport(editReport.id,{
+          animalId:form.animalId,animalName:animal.name,animalEmoji:animal.emoji,
+          severity:form.severity,zone:form.zone,district:form.district,
+          placeName:form.placeName,description:form.description,imageURL,
+        },user?.uid);
+        onSuccess?.('updated');
+      } else {
+        await window.KV.submitReport({
+          animalId:form.animalId,animalName:animal.name,animalEmoji:animal.emoji,
+          severity:form.severity,zone:form.zone,district:form.district,
+          placeName:form.placeName,description:form.description,
+          latitude:lat,longitude:lng,location:form.district,imageURL,
+        },user);
+        onSuccess?.('submitted');
+      }
+      onClose();
+    }catch(e){toast.show(e.message||'Failed','error');}
+    finally{setSaving(false);}
+  }
+
+  return h('div',{className:'modal-overlay',onClick:e=>e.target===e.currentTarget&&onClose()},
+    h('div',{className:'modal-sheet'},
+      h('div',{style:{width:40,height:4,background:'rgba(255,255,255,0.15)',borderRadius:2,margin:'0 auto 20px'}}),
+      h('h2',{style:{fontFamily:'Playfair Display,serif',fontSize:'20px',color:'var(--tx)',marginBottom:4}},
+        isEdit?'✏️ Edit Report':'🚨 Report Wildlife Sighting'),
+      h('p',{style:{fontSize:'12px',color:'var(--tx3)',marginBottom:20}},
+        user?`${isEdit?'Editing':'Reporting'} as ${user.displayName}`:'Anonymous (sign in to track your reports)'),
+
+      // Animal grid
+      h('div',{style:{marginBottom:16}},
+        h('label',{style:{fontSize:'12px',color:'var(--tx3)',marginBottom:6,display:'block'}},'Animal Spotted'),
+        h('div',{style:{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:5}},
+          DANGEROUS_ANIMALS.map(a=>h('button',{key:a.id,onClick:()=>set('animalId',a.id),
+            style:{background:form.animalId===a.id?`${a.color}22`:'rgba(255,255,255,0.04)',
+              border:`1.5px solid ${form.animalId===a.id?a.color:'rgba(255,255,255,0.1)'}`,
+              borderRadius:10,padding:'7px 4px',cursor:'pointer',color:'var(--tx)',
+              fontSize:'11px',textAlign:'center',transition:'all 0.2s'}},
+            h('div',{style:{fontSize:'20px'}},a.emoji),
+            h('div',{style:{marginTop:2,lineHeight:'1.2',fontSize:'10px'}},a.name.split(' ')[0])))
+        )
+      ),
+
+      // Severity
+      h('div',{style:{marginBottom:14}},
+        h('label',{style:{fontSize:'12px',color:'var(--tx3)',marginBottom:6,display:'block'}},'Severity Level'),
+        h('div',{style:{display:'flex',gap:6}},
+          ['low','medium','high','critical'].map(s=>h('button',{key:s,onClick:()=>set('severity',s),
+            style:{flex:1,padding:'8px 4px',borderRadius:8,cursor:'pointer',
+              background:form.severity===s?`${SEVERITY_COLORS[s]}22`:'rgba(255,255,255,0.04)',
+              border:`1.5px solid ${form.severity===s?SEVERITY_COLORS[s]:'rgba(255,255,255,0.1)'}`,
+              color:form.severity===s?SEVERITY_COLORS[s]:'var(--tx2)',fontSize:'12px',fontWeight:500,transition:'all 0.2s'}},
+            capFirst(s)))
+        )
+      ),
+
+      // Zone + District
+      h('div',{style:{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10,marginBottom:14}},
+        h('div',null,
+          h('label',{style:{fontSize:'12px',color:'var(--tx3)',marginBottom:4,display:'block'}},'Zone'),
+          h('select',{className:'kv-input',value:form.zone,onChange:e=>set('zone',e.target.value)},
+            ZONES.map(z=>h('option',{key:z,value:z},z)))),
+        h('div',null,
+          h('label',{style:{fontSize:'12px',color:'var(--tx3)',marginBottom:4,display:'block'}},'District'),
+          h('select',{className:'kv-input',value:form.district,onChange:e=>set('district',e.target.value)},
+            DISTRICTS.map(d=>h('option',{key:d,value:d},d))))
+      ),
+
+      h('div',{style:{marginBottom:14}},
+        h('label',{style:{fontSize:'12px',color:'var(--tx3)',marginBottom:4,display:'block'}},'Specific Location / Landmark'),
+        h('input',{className:'kv-input',type:'text',placeholder:'e.g. Near Kabini Bridge, Hunsur',
+          value:form.placeName,onChange:e=>set('placeName',e.target.value)})
+      ),
+
+      h('div',{style:{marginBottom:14}},
+        h('label',{style:{fontSize:'12px',color:'var(--tx3)',marginBottom:4,display:'block'}},'Description *'),
+        h('textarea',{className:'kv-input',
+          placeholder:'Describe what you saw — animal behaviour, number of animals, direction of movement…',
+          value:form.description,onChange:e=>set('description',e.target.value)})
+      ),
+
+      // Image upload
+      h('div',{style:{marginBottom:20}},
+        h('label',{style:{fontSize:'12px',color:'var(--tx3)',marginBottom:6,display:'block'}},'📷 Wildlife Photo (optional)'),
+        h('div',{onClick:()=>fileRef.current?.click(),style:{
+          border:'1px dashed rgba(34,197,94,0.3)',borderRadius:10,padding:'16px',
+          textAlign:'center',cursor:'pointer',transition:'all 0.2s',
+          background:imgFile?'rgba(34,197,94,0.1)':'rgba(255,255,255,0.03)',
+        }},
+          imgFile
+            ? h('p',{style:{fontSize:'13px',color:'#22c55e'}},'✅ '+imgFile.name)
+            : h('p',{style:{fontSize:'12px',color:'var(--tx3)'}},
+                isEdit&&editReport?.imageURL?'📸 Photo attached (tap to change)':'📸 Tap to select photo')
+        ),
+        h('input',{ref:fileRef,type:'file',accept:'image/*',style:{display:'none'},
+          onChange:e=>setImgFile(e.target.files[0]||null)})
+      ),
+
+      h('p',{style:{fontSize:'11px',color:'var(--tx3)',marginBottom:16}},
+        '📍 GPS coordinates captured automatically if location access is granted.'),
+
+      h('button',{className:'kv-btn',onClick:handleSubmit,disabled:saving,
+        style:{width:'100%',display:'flex',alignItems:'center',justifyContent:'center',gap:8}},
+        saving&&h(Spinner,{size:18}),saving?'Saving…':isEdit?'💾 Save Changes':'🚨 Submit Report'),
+
+      toast.toast&&h(Toast,{key:toast.toast.key,...toast.toast,onDone:toast.clear})
+    )
+  );
+}
+
+// ── ReportDetailModal ─────────────────────────────────────────────
+function ReportDetailModal({report:r,isAdmin,isRanger,user,onClose,onVerify,onDelete,onEdit}){
+  const sc=SEVERITY_COLORS[r.severity]||'#94a3b8';
+  return h('div',{className:'modal-overlay',onClick:e=>e.target===e.currentTarget&&onClose()},
+    h('div',{className:'modal-sheet'},
+      h('div',{style:{width:40,height:4,background:'rgba(255,255,255,0.15)',borderRadius:2,margin:'0 auto 16px'}}),
+      // Header
+      h('div',{style:{display:'flex',alignItems:'flex-start',gap:12,marginBottom:16}},
+        h('span',{style:{fontSize:36}},r.animalEmoji||'🐾'),
+        h('div',{style:{flex:1}},
+          h('h2',{style:{fontFamily:'Playfair Display,serif',fontSize:'20px',color:'var(--tx)',marginBottom:6}},r.animalName),
+          h('div',{style:{display:'flex',gap:6,flexWrap:'wrap'}},
+            h('span',{style:{background:`${sc}22`,border:`1px solid ${sc}44`,color:sc,
+              borderRadius:6,padding:'2px 8px',fontSize:'11px',fontWeight:600}},
+              (r.severity||'').toUpperCase()),
+            r.verified&&h('span',{className:'badge-pill verified-badge'},'✅ Verified'),
+            h('span',{className:`badge-pill ${r.status==='pending'?'pending-badge':r.status==='active'?'active-badge':'verified-badge'}`},
+              capFirst(r.status||'pending'))
+          )
+        )
+      ),
+
+      // Image
+      r.imageURL&&h('img',{src:r.imageURL,alt:'Wildlife sighting',style:{
+        width:'100%',borderRadius:12,marginBottom:14,maxHeight:220,objectFit:'cover',
+      }}),
+
+      // Details
+      h('div',{style:{display:'grid',gridTemplateColumns:'1fr 1fr',gap:8,marginBottom:14}},
+        DetailItem('📍 District',r.district),
+        DetailItem('🗺️ Zone',r.zone),
+        DetailItem('📌 Location',r.placeName||'—'),
+        DetailItem('🕐 Reported',timeAgo(r.createdAt)),
+        DetailItem('👤 Reporter',r.reporterName||'Anonymous'),
+        r.latitude&&DetailItem('🌐 GPS',`${r.latitude?.toFixed(4)}, ${r.longitude?.toFixed(4)}`),
+      ),
+
+      r.description&&h('div',{style:{background:'rgba(255,255,255,0.04)',borderRadius:10,
+        padding:14,marginBottom:14}},
+        h('p',{style:{fontSize:'12px',color:'var(--tx3)',marginBottom:4}},'Description'),
+        h('p',{style:{fontSize:'14px',color:'var(--tx)',lineHeight:'1.6'}},r.description)
+      ),
+
+      r.verified&&r.verifiedBy&&h('div',{style:{background:'rgba(34,197,94,0.08)',border:'1px solid rgba(34,197,94,0.2)',
+        borderRadius:10,padding:'12px 14px',marginBottom:14}},
+        h('p',{style:{fontSize:'12px',color:'#22c55e'}},
+          '✅ Verified by Forest Department'+
+          (r.verifiedAt?' · '+timeAgo(typeof r.verifiedAt==='number'?r.verifiedAt:r.verifiedAt?.toMillis?.())||'':''))
+      ),
+
+      // GPS link
+      r.latitude&&h('a',{
+        href:`https://maps.google.com/?q=${r.latitude},${r.longitude}`,
+        target:'_blank',rel:'noopener',
+        style:{display:'block',background:'rgba(34,197,94,0.1)',border:'1px solid rgba(34,197,94,0.2)',
+          borderRadius:10,padding:'10px 14px',marginBottom:14,color:'#22c55e',
+          textDecoration:'none',fontSize:'13px',textAlign:'center'}},
+        '🗺️ Open Location in Maps'),
+
+      // Actions
+      h('div',{style:{display:'flex',gap:8,flexWrap:'wrap'}},
+        // Owner can edit/delete own reports
+        user&&r.uid===user.uid&&!r.verified&&h('button',{
+          className:'kv-btn ghost sm',onClick:onEdit},'✏️ Edit'),
+        user&&r.uid===user.uid&&!r.verified&&h('button',{
+          className:'kv-btn danger sm',onClick:onDelete},'🗑 Delete'),
+        // Admin/Ranger
+        (isAdmin||isRanger)&&!r.verified&&h('button',{
+          className:'kv-btn sm',onClick:onVerify},'✅ Verify Report'),
+        isAdmin&&h('button',{className:'kv-btn danger sm',onClick:onDelete},'🗑 Delete'),
+        h('button',{className:'kv-btn ghost sm',onClick:onClose},'Close')
+      ),
+
+      h('div',{style:{marginTop:12}}),
+    )
+  );
+}
+function DetailItem(label,value){
+  return h('div',{style:{background:'rgba(255,255,255,0.04)',borderRadius:8,padding:'10px 12px'}},
+    h('p',{style:{fontSize:'10px',color:'var(--tx3)',marginBottom:2}},label),
+    h('p',{style:{fontSize:'13px',color:'var(--tx)',fontWeight:500}},value||'—')
+  );
+}
+
+// ── ReportCard ─────────────────────────────────────────────────────
+function ReportCard({report:r,isAdmin,isRanger,user,onVerify,onDelete,onEdit,onClick}){
+  const sc=SEVERITY_COLORS[r.severity]||'#94a3b8';
+  const isOwner=user&&r.uid===user.uid;
+  return h('div',{className:'report-card',onClick,style:{
+    borderLeft:`3px solid ${sc}`,cursor:'pointer',position:'relative'}},
+    r.imageURL&&h('div',{style:{position:'absolute',top:14,right:14,
+      background:'rgba(0,0,0,0.5)',borderRadius:6,padding:'2px 6px',fontSize:'10px',color:'#fff'}},
+      '📷'),
+    h('div',{style:{display:'flex',alignItems:'flex-start',gap:10}},
+      h('span',{style:{fontSize:24,flexShrink:0}},r.animalEmoji||'🐾'),
+      h('div',{style:{flex:1,minWidth:0}},
+        h('div',{style:{display:'flex',alignItems:'center',gap:6,flexWrap:'wrap',marginBottom:4}},
+          h('span',{style:{fontWeight:600,fontSize:'14px',color:'var(--tx)'}},r.animalName),
+          h('span',{style:{background:`${sc}22`,border:`1px solid ${sc}44`,color:sc,
+            borderRadius:6,padding:'1px 7px',fontSize:'10px',fontWeight:600}},
+            (r.severity||'').toUpperCase()),
+          r.verified&&h('span',{className:'badge-pill verified-badge'},'✅'),
+          h('span',{className:`badge-pill ${r.status==='pending'?'pending-badge':'active-badge'}`},
+            capFirst(r.status||'pending'))
+        ),
+        h('p',{style:{fontSize:'12px',color:'var(--tx2)',marginBottom:3}},
+          '📍 '+[r.placeName,r.district].filter(Boolean).join(', ')),
+        r.zone&&h('p',{style:{fontSize:'11px',color:'var(--tx3)',marginBottom:3}},'Zone: '+r.zone),
+        r.description&&h('p',{style:{fontSize:'12px',color:'var(--tx2)',lineHeight:'1.5',marginBottom:5,
+          overflow:'hidden',display:'-webkit-box',WebkitLineClamp:2,WebkitBoxOrient:'vertical'}},
+          r.description),
+        h('div',{style:{display:'flex',alignItems:'center',gap:8,flexWrap:'wrap'}},
+          h('span',{style:{fontSize:'11px',color:'var(--tx3)'}},timeAgo(r.createdAt)),
+          r.reporterName&&h('span',{style:{fontSize:'11px',color:'var(--tx3)'}},'· by '+r.reporterName),
+          isOwner&&h('span',{style:{fontSize:'10px',color:'var(--ga)',marginLeft:4}},'(yours)')
+        )
+      )
+    ),
+    // Quick actions (stop propagation)
+    (isAdmin||isRanger||isOwner)&&h('div',{
+      onClick:e=>e.stopPropagation(),
+      style:{display:'flex',gap:6,marginTop:10}},
+      !r.verified&&(isAdmin||isRanger)&&h('button',{className:'kv-btn sm',onClick:onVerify,
+        style:{flex:1}},'✅ Verify'),
+      isOwner&&!r.verified&&h('button',{className:'kv-btn ghost sm',onClick:onEdit},'✏️'),
+      isAdmin&&h('button',{className:'kv-btn danger sm',onClick:onDelete},'🗑'),
+      isOwner&&!isAdmin&&!r.verified&&h('button',{className:'kv-btn danger sm',onClick:onDelete},'🗑')
+    )
+  );
+}
+
+// ── LiveReportsPage ────────────────────────────────────────────────
+function LiveReportsPage({user,isAdmin,isRanger,onReport}){
+  const[reports,setReports]=useState([]);
+  const[loading,setLoading]=useState(true);
+  const[filter,setFilter]=useState({severity:'',district:'',status:''});
+  const[search,setSearch]=useState('');
+  const[page,setPage]=useState(1);
+  const[selectedReport,setSelectedReport]=useState(null);
+  const[editReport,setEditReport]=useState(null);
+  const PER_PAGE=10;
+  const toast=useToast();
+
+  useEffect(()=>{
+    if(!window.KV){setLoading(false);return;}
+    const f={};
+    if(filter.severity)f.severity=filter.severity;
+    if(filter.district)f.district=filter.district;
+    if(filter.status)  f.status=filter.status;
+    setLoading(true);
+    const unsub=window.KV.listenReports(f,(items,err)=>{
+      if(err)toast.show('Failed to load reports','error');
+      setReports(items||[]);setLoading(false);
+    });
+    setPage(1);
+    return()=>{if(unsub)unsub();};
+  },[filter.severity,filter.district,filter.status]);
+
+  const filtered=useMemo(()=>{
+    if(!search.trim())return reports;
+    const q=search.toLowerCase();
+    return reports.filter(r=>
+      r.animalName?.toLowerCase().includes(q)||r.description?.toLowerCase().includes(q)||
+      r.district?.toLowerCase().includes(q)||r.placeName?.toLowerCase().includes(q)||
+      r.reporterName?.toLowerCase().includes(q)
+    );
+  },[reports,search]);
+
+  const totalPages=Math.max(1,Math.ceil(filtered.length/PER_PAGE));
+  const paginated=filtered.slice((page-1)*PER_PAGE,page*PER_PAGE);
+
+  async function handleVerify(id){
+    try{await window.KV.adminUpdateReport(id,{verified:true,status:'active'},user?.uid);
+      toast.show('Report verified ✅');setSelectedReport(null);}
+    catch(e){toast.show(e.message,'error');}
+  }
+  async function handleDelete(id){
+    if(!confirm('Permanently delete this report?'))return;
+    try{await window.KV.deleteReport(id,user?.uid);
+      toast.show('Report deleted');setSelectedReport(null);}
+    catch(e){toast.show(e.message,'error');}
+  }
+
+  return h('div',{style:{padding:'0 0 90px'}},
+    // Filter bar
+    h('div',{style:{padding:'12px 16px',background:'rgba(10,46,24,0.6)',borderBottom:'1px solid rgba(34,197,94,0.1)'}},
+      h('div',{className:'search-wrap',style:{marginBottom:8}},
+        h('span',{className:'search-icon'},'🔍'),
+        h('input',{className:'kv-input',type:'text',placeholder:'Search reports…',
+          value:search,onChange:e=>{setSearch(e.target.value);setPage(1);}})
+      ),
+      h('div',{style:{display:'flex',gap:6,flexWrap:'wrap'}},
+        h('select',{className:'kv-input',style:{flex:1,minWidth:90},value:filter.severity,
+          onChange:e=>setFilter(f=>({...f,severity:e.target.value}))},
+          h('option',{value:''},'All Severity'),
+          ['critical','high','medium','low'].map(s=>h('option',{key:s,value:s},capFirst(s)))),
+        h('select',{className:'kv-input',style:{flex:1,minWidth:100},value:filter.district,
+          onChange:e=>setFilter(f=>({...f,district:e.target.value}))},
+          h('option',{value:''},'All Districts'),
+          DISTRICTS.map(d=>h('option',{key:d,value:d},d))),
+        h('select',{className:'kv-input',style:{flex:1,minWidth:90},value:filter.status,
+          onChange:e=>setFilter(f=>({...f,status:e.target.value}))},
+          h('option',{value:''},'All Status'),
+          ['pending','active','resolved'].map(s=>h('option',{key:s,value:s},capFirst(s)))),
+        (isAdmin||isRanger)&&h('button',{className:'kv-btn ghost sm',
+          onClick:()=>window.KV.exportCSV(reports)},'📥')
+      )
+    ),
+
+    // Stats bar
+    h('div',{style:{padding:'10px 16px 4px',display:'flex',alignItems:'center',justifyContent:'space-between'}},
+      h('p',{style:{fontSize:'12px',color:'var(--tx3)'}},
+        loading?'Loading…':`${filtered.length} report${filtered.length!==1?'s':''} ${search?'found':'live'}`),
+      h('div',{style:{display:'flex',alignItems:'center',gap:6}},
+        h('div',{style:{width:8,height:8,borderRadius:'50%',
+          background:loading?'#94a3b8':'#22c55e',boxShadow:loading?'none':'0 0 8px #22c55e'}}),
+        !loading&&h('span',{style:{fontSize:'10px',color:'#22c55e'}},'LIVE'))
+    ),
+
+    h('div',{style:{padding:'0 16px'}},
+      loading
+        ? h('div',{style:{display:'flex',justifyContent:'center',padding:40}},h(Spinner,{size:32}))
+        : paginated.length===0
+          ? h('div',{style:{textAlign:'center',padding:'60px 20px',color:'var(--tx3)'}},
+              h('div',{style:{fontSize:48,marginBottom:12}},'🌿'),
+              h('p',{style:{fontSize:'14px'}},
+                search||filter.severity||filter.district||filter.status
+                  ?'No reports match your search.':'No reports yet. Be the first to report!'),
+              h('button',{className:'kv-btn',onClick:onReport,style:{marginTop:16}},'🚨 Submit Report'))
+          : h('div',null,
+              paginated.map(r=>h(ReportCard,{key:r.id,report:r,isAdmin,isRanger,user,
+                onClick:()=>setSelectedReport(r),
+                onVerify:e=>{e.stopPropagation();handleVerify(r.id);},
+                onDelete:e=>{e.stopPropagation();handleDelete(r.id);},
+                onEdit:e=>{e.stopPropagation();setEditReport(r);},
+              })),
+              totalPages>1&&h('div',{style:{display:'flex',alignItems:'center',justifyContent:'center',gap:8,padding:'8px 0 4px'}},
+                h('button',{className:'kv-btn ghost sm',onClick:()=>setPage(p=>Math.max(1,p-1)),disabled:page===1},'← Prev'),
+                h('span',{style:{fontSize:'12px',color:'var(--tx3)'}},`${page} / ${totalPages}`),
+                h('button',{className:'kv-btn ghost sm',onClick:()=>setPage(p=>Math.min(totalPages,p+1)),disabled:page===totalPages},'Next →')
+              )
+            )
+    ),
+
+    // FAB
+    h('button',{className:'kv-btn',onClick:onReport,style:{
+      position:'fixed',bottom:80,right:16,borderRadius:50,width:52,height:52,
+      fontSize:22,padding:0,display:'flex',alignItems:'center',justifyContent:'center',
+      boxShadow:'0 4px 20px rgba(34,197,94,0.4)',zIndex:100}},'🚨'),
+
+    // Report detail modal
+    selectedReport&&h(ReportDetailModal,{
+      report:selectedReport,isAdmin,isRanger,user,
+      onClose:()=>setSelectedReport(null),
+      onVerify:()=>handleVerify(selectedReport.id),
+      onDelete:()=>handleDelete(selectedReport.id),
+      onEdit:()=>{setEditReport(selectedReport);setSelectedReport(null);},
+    }),
+
+    // Edit modal
+    editReport&&h(ReportModal,{user,editReport,
+      onClose:()=>setEditReport(null),
+      onSuccess:(action)=>{toast.show(action==='updated'?'Report updated ✅':'Report submitted ✅');}
+    }),
+
+    toast.toast&&h(Toast,{key:toast.toast.key,...toast.toast,onDone:toast.clear})
+  );
+}
+
+// ── ForestUpdatesPage ─────────────────────────────────────────────
+function ForestUpdatesPage({user,isAdmin,isRanger}){
+  const[updates,setUpdates]=useState([]);
+  const[loading,setLoading]=useState(true);
+  const[catFilter,setCatFilter]=useState(null);
+  const[showPost,setShowPost]=useState(false);
+  const[form,setForm]=useState({title:'',body:'',category:'conservation',district:'Statewide'});
+  const[posting,setPosting]=useState(false);
+  const toast=useToast();
+
+  useEffect(()=>{
+    if(!window.KV){setLoading(false);return;}
+    setLoading(true);
+    const unsub=window.KV.listenForestUpdates(items=>{setUpdates(items||[]);setLoading(false);},catFilter);
+    return()=>{if(unsub)unsub();};
+  },[catFilter]);
+
+  async function handlePost(){
+    if(!form.title.trim()||!form.body.trim()){toast.show('Title and body required','error');return;}
+    if(!user){toast.show('Sign in to post','error');return;}
+    setPosting(true);
+    try{
+      await window.KV.postForestUpdate(form,user);
+      setForm({title:'',body:'',category:'conservation',district:'Statewide'});
+      setShowPost(false);toast.show('Update posted ✅');
+    }catch(e){toast.show(e.message,'error');}
+    finally{setPosting(false);}
+  }
+
+  async function handleDelete(id){
+    if(!confirm('Delete this update?'))return;
+    try{await window.KV.deleteForestUpdate(id,user?.uid);toast.show('Deleted');}
+    catch(e){toast.show(e.message,'error');}
+  }
+
+  return h('div',{style:{padding:'16px 16px 90px'}},
+    h('div',{style:{display:'flex',alignItems:'center',marginBottom:4}},
+      h('h2',{style:{fontFamily:'Playfair Display,serif',fontSize:'22px',color:'var(--tx)',flex:1}},'🌲 Forest Updates'),
+      (isAdmin||isRanger)&&h('button',{className:'kv-btn sm',onClick:()=>setShowPost(!showPost)},
+        showPost?'✕ Cancel':'+ Post')
+    ),
+    h('p',{style:{fontSize:'12px',color:'var(--tx3)',marginBottom:14}},"Live news from Karnataka's forests"),
+
+    // Post form (admin only)
+    showPost&&h('div',{style:{background:'rgba(15,77,40,0.3)',border:'1px solid rgba(34,197,94,0.2)',
+      borderRadius:14,padding:16,marginBottom:16}},
+      h('input',{className:'kv-input',placeholder:'Update title',style:{marginBottom:8},
+        value:form.title,onChange:e=>setForm(f=>({...f,title:e.target.value}))}),
+      h('div',{style:{display:'grid',gridTemplateColumns:'1fr 1fr',gap:8,marginBottom:8}},
+        h('select',{className:'kv-input',value:form.category,onChange:e=>setForm(f=>({...f,category:e.target.value}))},
+          FOREST_CATEGORIES.map(c=>h('option',{key:c.id,value:c.id},c.emoji+' '+c.label))),
+        h('select',{className:'kv-input',value:form.district,onChange:e=>setForm(f=>({...f,district:e.target.value}))},
+          h('option',{value:'Statewide'},'Statewide'),
+          DISTRICTS.map(d=>h('option',{key:d,value:d},d)))
+      ),
+      h('textarea',{className:'kv-input',placeholder:'Update body…',style:{marginBottom:10},
+        value:form.body,onChange:e=>setForm(f=>({...f,body:e.target.value}))}),
+      h('button',{className:'kv-btn',onClick:handlePost,disabled:posting,
+        style:{display:'flex',alignItems:'center',gap:8}},
+        posting&&h(Spinner,{size:16}),posting?'Posting…':'📤 Post Update')
+    ),
+
+    // Category tabs
+    h('div',{style:{display:'flex',gap:6,flexWrap:'wrap',marginBottom:14}},
+      [{id:null,label:'All',emoji:'🌿'},...FOREST_CATEGORIES].map(c=>h('button',{
+        key:c.id||'all',onClick:()=>setCatFilter(c.id),
+        style:{padding:'5px 10px',borderRadius:16,fontSize:'11px',cursor:'pointer',border:'none',
+          background:catFilter===c.id?'rgba(34,197,94,0.2)':'rgba(255,255,255,0.05)',
+          color:catFilter===c.id?'#22c55e':'var(--tx3)'}},c.emoji,' ',c.label))
+    ),
+
+    loading
+      ? h('div',{style:{display:'flex',justifyContent:'center',padding:40}},h(Spinner,{size:32}))
+      : updates.length===0
+        ? h('div',{style:{textAlign:'center',padding:'40px 20px',color:'var(--tx3)'}},
+            h('p',{},'No updates yet.'))
+        : updates.map(u=>{
+            const cat=FOREST_CATEGORIES.find(c=>c.id===u.category)||FOREST_CATEGORIES[0];
+            return h('div',{key:u.id,style:{background:'rgba(15,77,40,0.2)',border:'1px solid rgba(34,197,94,0.12)',
+              borderRadius:14,padding:14,marginBottom:10,animation:'fadeIn 0.3s ease'}},
+              h('div',{style:{display:'flex',alignItems:'center',gap:8,marginBottom:8}},
+                h('span',{style:{background:'rgba(34,197,94,0.1)',border:'1px solid rgba(34,197,94,0.2)',
+                  borderRadius:6,padding:'2px 8px',fontSize:'10px',color:'#22c55e'}},
+                  cat.emoji+' '+cat.label),
+                h('span',{style:{fontSize:'10px',color:'var(--tx3)',marginLeft:'auto'}},
+                  '📍 '+u.district),
+                h('span',{style:{fontSize:'10px',color:'var(--tx3)',marginLeft:8}},
+                  timeAgo(u.createdAt)),
+                isAdmin&&h('button',{onClick:()=>handleDelete(u.id),
+                  style:{background:'none',border:'none',cursor:'pointer',color:'#ef4444',fontSize:'14px',marginLeft:6}},'×')
+              ),
+              h('h3',{style:{fontSize:'15px',fontWeight:600,color:'var(--tx)',marginBottom:6}},u.title),
+              h('p',{style:{fontSize:'13px',color:'var(--tx2)',lineHeight:'1.6'}},u.body),
+              h('p',{style:{fontSize:'11px',color:'var(--tx3)',marginTop:8}},'by '+u.authorName)
+            );
+          }),
+    toast.toast&&h(Toast,{key:toast.toast.key,...toast.toast,onDone:toast.clear})
+  );
+}
+
+// ══════════════════════════════════════════════════════════════════
+// LEARNING MODULE SYSTEM
+// ══════════════════════════════════════════════════════════════════
+
+// ── LearningModuleReader ──────────────────────────────────────────
+function LearningModuleReader({module:m,user,onClose,progress,onProgressUpdate}){
+  const[readPct,setReadPct]=useState(progress||0);
+  const contentRef=useRef();
+  const toast=useToast();
+
+  useEffect(()=>{
+    const el=contentRef.current;
+    if(!el)return;
+    const onScroll=()=>{
+      const pct=Math.round((el.scrollTop/(el.scrollHeight-el.clientHeight))*100);
+      if(pct>readPct){
+        setReadPct(pct);
+        if(window.KV&&user)
+          window.KV.markProgress(user.uid,m.id,pct).catch(()=>{});
+        if(pct>=90)onProgressUpdate?.(m.id,100);
+        else onProgressUpdate?.(m.id,pct);
+      }
+    };
+    el.addEventListener('scroll',onScroll);
+    return()=>el.removeEventListener('scroll',onScroll);
+  },[m.id,user,readPct]);
+
+  const diffColor={beginner:'#22c55e',intermediate:'#eab308',advanced:'#ef4444'};
+  const dc=diffColor[m.difficulty]||'#22c55e';
+
+  return h('div',{className:'modal-overlay',onClick:e=>e.target===e.currentTarget&&onClose()},
+    h('div',{className:'modal-sheet',ref:contentRef,style:{paddingBottom:60}},
+      // Top bar
+      h('div',{style:{position:'sticky',top:-24,background:'#061a0c',
+        paddingTop:24,paddingBottom:12,marginTop:-24,zIndex:10}},
+        h('div',{style:{width:40,height:4,background:'rgba(255,255,255,0.15)',borderRadius:2,margin:'0 auto 16px'}}),
+        h('div',{style:{display:'flex',alignItems:'center',gap:8,marginBottom:8}},
+          h('span',{style:{fontSize:28}},m.emoji||'📚'),
+          h('div',{style:{flex:1}},
+            h('h2',{style:{fontFamily:'Playfair Display,serif',fontSize:'18px',color:'var(--tx)',lineHeight:'1.3'}},m.title),
+            h('div',{style:{display:'flex',gap:6,flexWrap:'wrap',marginTop:4}},
+              h('span',{style:{fontSize:'10px',color:dc,background:`${dc}22`,border:`1px solid ${dc}44`,
+                borderRadius:20,padding:'2px 8px'}},capFirst(m.difficulty)),
+              h('span',{style:{fontSize:'10px',color:'var(--tx3)'}},fmtDuration(m.duration)),
+              m.district&&m.district!=='Statewide'&&h('span',{style:{fontSize:'10px',color:'var(--tx3)'}},
+                '📍 '+m.district)
+            )
+          ),
+          h('button',{onClick:onClose,style:{background:'none',border:'none',color:'var(--tx3)',
+            fontSize:20,cursor:'pointer',padding:4}},'×')
+        ),
+        // Progress bar
+        h('div',{className:'progress-bar-wrap'},
+          h('div',{className:'progress-bar',style:{width:readPct+'%'}}))
+      ),
+
+      // Tags
+      m.tags&&m.tags.length>0&&h('div',{style:{marginBottom:16}},
+        m.tags.map(t=>h('span',{key:t,className:'tag-chip'},t))
+      ),
+
+      // Main content
+      h('div',{style:{fontSize:'14px',color:'var(--tx2)',lineHeight:'1.8',marginBottom:24}},
+        m.content.split('\n').filter(Boolean).map((para,i)=>
+          h('p',{key:i,style:{marginBottom:12}},para))
+      ),
+
+      // Facts section
+      m.facts&&m.facts.length>0&&h('div',{style:{marginBottom:20}},
+        h('h3',{style:{fontFamily:'Playfair Display,serif',fontSize:'17px',color:'var(--tx)',marginBottom:12}},
+          '🔍 Did You Know?'),
+        m.facts.map((fact,i)=>h('div',{key:i,className:'fact-card'},
+          h('p',{style:{fontSize:'13px',color:'var(--tx2)',lineHeight:'1.6'}},fact)))
+      ),
+
+      // Tags footer
+      h('div',{style:{borderTop:'1px solid rgba(34,197,94,0.1)',paddingTop:16,marginTop:8,
+        display:'flex',gap:8,alignItems:'center',justifyContent:'space-between'}},
+        h('span',{style:{fontSize:'11px',color:'var(--tx3)'}},
+          readPct>=90?'✅ Completed!':'📖 '+readPct+'% read'),
+        h('button',{className:'kv-btn ghost sm',onClick:onClose},'← Back')
+      ),
+
+      toast.toast&&h(Toast,{key:toast.toast.key,...toast.toast,onDone:toast.clear})
+    )
+  );
+}
+
+// ── AdminModuleEditor ─────────────────────────────────────────────
+function AdminModuleEditor({module:m,user,onClose,onSaved}){
+  const[form,setForm]=useState(m?{...m,tags:(m.tags||[]).join(', '),facts:(m.facts||[]).join('\n')}:{
+    title:'',summary:'',content:'',category:'wildlife',difficulty:'beginner',
+    duration:5,emoji:'📚',tags:'',facts:'',district:'Statewide',
+    featured:false,published:true,sortOrder:99,
+  });
+  const[saving,setSaving]=useState(false);
+  const toast=useToast();
+  const set=(k,v)=>setForm(f=>({...f,[k]:v}));
+
+  async function handleSave(){
+    if(!form.title.trim()||!form.content.trim()){toast.show('Title and content required','error');return;}
+    setSaving(true);
+    try{
+      const payload={
+        ...form,
+        tags:form.tags.split(',').map(t=>t.trim()).filter(Boolean),
+        facts:form.facts.split('\n').map(t=>t.trim()).filter(Boolean),
+        duration:Number(form.duration)||5,
+        sortOrder:Number(form.sortOrder)||99,
+      };
+      const id=await window.KV.saveLearningModule(payload,user,m?.id||null);
+      onSaved?.(id);toast.show(m?'Module updated ✅':'Module created ✅');onClose();
+    }catch(e){toast.show(e.message||'Failed','error');}
+    finally{setSaving(false);}
+  }
+
+  const LabelInput=(label,field,type='text',placeholder='')=>
+    h('div',{style:{marginBottom:10}},
+      h('label',{style:{fontSize:'12px',color:'var(--tx3)',display:'block',marginBottom:4}},label),
+      type==='textarea'
+        ? h('textarea',{className:'kv-input',placeholder,rows:4,value:form[field]||'',
+            onChange:e=>set(field,e.target.value)})
+        : type==='checkbox'
+          ? h('label',{style:{display:'flex',alignItems:'center',gap:8,cursor:'pointer'}},
+              h('input',{type:'checkbox',checked:!!form[field],
+                onChange:e=>set(field,e.target.checked),
+                style:{width:16,height:16,accentColor:'#22c55e'}}),
+              h('span',{style:{fontSize:'13px',color:'var(--tx2)'}},placeholder))
+          : h('input',{className:'kv-input',type,placeholder,value:form[field]||'',
+              onChange:e=>set(field,e.target.value)})
+    );
+
+  return h('div',{className:'modal-overlay',onClick:e=>e.target===e.currentTarget&&onClose()},
+    h('div',{className:'modal-sheet'},
+      h('div',{style:{width:40,height:4,background:'rgba(255,255,255,0.15)',borderRadius:2,margin:'0 auto 20px'}}),
+      h('h2',{style:{fontFamily:'Playfair Display,serif',fontSize:'20px',color:'var(--tx)',marginBottom:16}},
+        m?'✏️ Edit Learning Module':'➕ New Learning Module'),
+      LabelInput('Title','title','text','Module title…'),
+      LabelInput('Summary (card preview)','summary','text','One-line summary…'),
+      LabelInput('Emoji Icon','emoji','text','📚'),
+      h('div',{style:{display:'grid',gridTemplateColumns:'1fr 1fr',gap:8,marginBottom:10}},
+        h('div',null,
+          h('label',{style:{fontSize:'12px',color:'var(--tx3)',display:'block',marginBottom:4}},'Category'),
+          h('select',{className:'kv-input',value:form.category||'wildlife',
+            onChange:e=>set('category',e.target.value)},
+            LEARN_CATEGORIES.filter(c=>c.id).map(c=>h('option',{key:c.id,value:c.id},c.label)))),
+        h('div',null,
+          h('label',{style:{fontSize:'12px',color:'var(--tx3)',display:'block',marginBottom:4}},'Difficulty'),
+          h('select',{className:'kv-input',value:form.difficulty||'beginner',
+            onChange:e=>set('difficulty',e.target.value)},
+            ['beginner','intermediate','advanced'].map(d=>h('option',{key:d,value:d},capFirst(d)))))
+      ),
+      h('div',{style:{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:8,marginBottom:10}},
+        h('div',null,
+          h('label',{style:{fontSize:'12px',color:'var(--tx3)',display:'block',marginBottom:4}},'Duration (min)'),
+          h('input',{className:'kv-input',type:'number',value:form.duration||5,
+            onChange:e=>set('duration',e.target.value)})),
+        h('div',null,
+          h('label',{style:{fontSize:'12px',color:'var(--tx3)',display:'block',marginBottom:4}},'Sort Order'),
+          h('input',{className:'kv-input',type:'number',value:form.sortOrder||99,
+            onChange:e=>set('sortOrder',e.target.value)})),
+        h('div',null,
+          h('label',{style:{fontSize:'12px',color:'var(--tx3)',display:'block',marginBottom:4}},'District'),
+          h('select',{className:'kv-input',value:form.district||'Statewide',
+            onChange:e=>set('district',e.target.value)},
+            h('option',{value:'Statewide'},'Statewide'),
+            DISTRICTS.map(d=>h('option',{key:d,value:d},d))))
+      ),
+      LabelInput('Full Content','content','textarea','Full article content (paragraphs separated by newlines)…'),
+      LabelInput('Tags (comma separated)','tags','text','Tiger, Big Cats, Bandipur…'),
+      LabelInput('Wildlife Facts (one per line)','facts','textarea','Interesting facts about this topic…'),
+      h('div',{style:{display:'flex',gap:16,marginBottom:16}},
+        LabelInput('','featured','checkbox','⭐ Featured module'),
+        LabelInput('','published','checkbox','✅ Published')
+      ),
+      h('button',{className:'kv-btn',onClick:handleSave,disabled:saving,
+        style:{width:'100%',display:'flex',alignItems:'center',justifyContent:'center',gap:8}},
+        saving&&h(Spinner,{size:18}),saving?'Saving…':'💾 Save Module'),
+      h('div',{style:{marginTop:8}}),
+      toast.toast&&h(Toast,{key:toast.toast.key,...toast.toast,onDone:toast.clear})
+    )
+  );
+}
+
+// ── LearningPage (main) ────────────────────────────────────────────
+function LearningPage({user,isAdmin}){
+  const[modules,setModules]=useState([]);
+  const[loading,setLoading]=useState(true);
+  const[catFilter,setCatFilter]=useState(null);
+  const[search,setSearch]=useState('');
+  const[selectedModule,setSelectedModule]=useState(null);
+  const[editModule,setEditModule]=useState(null);
+  const[showCreate,setShowCreate]=useState(false);
+  const[progress,setProgress]=useState({});
+  const[bookmarks,setBookmarks]=useState([]);
+  const[showBookmarks,setShowBookmarks]=useState(false);
+  const[factIdx,setFactIdx]=useState(Math.floor(Math.random()*WILDLIFE_FACTS.length));
+  const toast=useToast();
+
+  useEffect(()=>{
+    if(!window.KV){setLoading(false);return;}
+    const f=catFilter?{category:catFilter}:{};
+    setLoading(true);
+    const unsub=window.KV.listenLearningModules(items=>{
+      setModules(items||[]);setLoading(false);
+    },f);
+    return()=>{if(unsub)unsub();};
+  },[catFilter]);
+
+  useEffect(()=>{
+    if(!user||!window.KV)return;
+    window.KV.getUserProgress(user.uid).then(p=>setProgress(p||{})).catch(()=>{});
+    // Load bookmarks from profile
+    (async()=>{
+      try{
+        const snap=await window.KV.getDoc(window.KV.doc(window.KV.db,"users",user.uid));
+        if(snap.exists())setBookmarks(snap.data().bookmarks||[]);
+      }catch{}
+    })();
+  },[user]);
+
+  // Rotate facts
+  useEffect(()=>{
+    const t=setInterval(()=>setFactIdx(i=>(i+1)%WILDLIFE_FACTS.length),6000);
+    return()=>clearInterval(t);
+  },[]);
+
+  const filtered=useMemo(()=>{
+    let list=modules.filter(m=>m.published!==false);
+    if(showBookmarks)list=list.filter(m=>bookmarks.includes(m.id));
+    if(search.trim()){
+      const q=search.toLowerCase();
+      list=list.filter(m=>
+        m.title?.toLowerCase().includes(q)||m.summary?.toLowerCase().includes(q)||
+        m.category?.toLowerCase().includes(q)||(m.tags||[]).some(t=>t.toLowerCase().includes(q))
+      );
+    }
+    return list;
+  },[modules,search,showBookmarks,bookmarks]);
+
+  const featured=filtered.filter(m=>m.featured);
+  const inProgress=filtered.filter(m=>progress[m.id]>0&&progress[m.id]<90);
+  const completed=filtered.filter(m=>progress[m.id]>=90);
+
+  function handleProgressUpdate(moduleId,pct){
+    setProgress(p=>({...p,[moduleId]:pct}));
+  }
+
+  async function handleBookmark(moduleId){
+    if(!user){toast.show('Sign in to bookmark modules','error');return;}
+    const isBookmarked=bookmarks.includes(moduleId);
+    try{
+      const updated=await window.KV.toggleBookmark(user.uid,moduleId,isBookmarked);
+      setBookmarks(updated);
+      toast.show(isBookmarked?'Removed from bookmarks':'Bookmarked! 🔖');
+    }catch(e){toast.show(e.message||'Failed','error');}
+  }
+
+  async function handleDeleteModule(id){
+    if(!confirm('Delete this module?'))return;
+    try{await window.KV.deleteLearningModule(id,user?.uid);toast.show('Module deleted');}
+    catch(e){toast.show(e.message,'error');}
+  }
+
+  function ModuleCard({m,isCompact}){
+    const pct=progress[m.id]||0;
+    const isBookmarked=bookmarks.includes(m.id);
+    const diffColor={beginner:'#22c55e',intermediate:'#eab308',advanced:'#ef4444'};
+    const dc=diffColor[m.difficulty]||'#22c55e';
+    return h('div',{className:'learn-card',
+      style:{marginBottom:10,animationDelay:Math.random()*0.2+'s',
+        position:'relative'}},
+      // Bookmark button
+      h('button',{
+        onClick:e=>{e.stopPropagation();handleBookmark(m.id);},
+        style:{position:'absolute',top:10,right:10,background:isBookmarked?'rgba(34,197,94,0.15)':'rgba(0,0,0,0.3)',
+          border:'none',borderRadius:20,padding:'4px 8px',cursor:'pointer',fontSize:14,zIndex:1,
+          transition:'all 0.2s'},title:isBookmarked?'Remove bookmark':'Bookmark'},
+        isBookmarked?'🔖':'🤍'),
+      h('div',{onClick:()=>setSelectedModule(m),style:{padding:'14px 14px 10px'}},
+        h('div',{style:{display:'flex',gap:10,alignItems:'flex-start',marginBottom:10}},
+          h('span',{style:{fontSize:28,flexShrink:0}},m.emoji||'📚'),
+          h('div',{style:{flex:1,minWidth:0,paddingRight:32}},
+            h('h3',{style:{fontSize:'14px',fontWeight:600,color:'var(--tx)',lineHeight:'1.4',marginBottom:4}},m.title),
+            h('p',{style:{fontSize:'12px',color:'var(--tx2)',lineHeight:'1.4',
+              overflow:'hidden',display:'-webkit-box',WebkitLineClamp:2,WebkitBoxOrient:'vertical'}},
+              m.summary||m.content?.slice(0,100)+'…')
+          )
+        ),
+        h('div',{style:{display:'flex',gap:6,alignItems:'center',flexWrap:'wrap',marginBottom:8}},
+          h('span',{style:{fontSize:'10px',color:dc,background:`${dc}22`,border:`1px solid ${dc}33`,
+            borderRadius:20,padding:'2px 7px'}},capFirst(m.difficulty||'beginner')),
+          h('span',{style:{fontSize:'10px',color:'var(--tx3)'}},fmtDuration(m.duration||5)),
+          m.featured&&h('span',{style:{fontSize:'10px',color:'#f59e0b',background:'rgba(245,158,11,0.15)',
+            border:'1px solid rgba(245,158,11,0.3)',borderRadius:20,padding:'2px 7px'}},'⭐ Featured'),
+          pct>=90&&h('span',{style:{fontSize:'10px',color:'#22c55e',background:'rgba(34,197,94,0.15)',
+            border:'1px solid rgba(34,197,94,0.3)',borderRadius:20,padding:'2px 7px'}},'✅ Done'),
+          m.district&&m.district!=='Statewide'&&h('span',{className:'tag-chip'},m.district)
+        ),
+        pct>0&&h('div',{style:{marginBottom:6}},
+          h('div',{style:{display:'flex',justifyContent:'space-between',marginBottom:3}},
+            h('span',{style:{fontSize:'10px',color:'var(--tx3)'}},'Progress'),
+            h('span',{style:{fontSize:'10px',color:pct>=90?'#22c55e':'var(--tx3)'}},pct+'%')),
+          h('div',{className:'progress-bar-wrap'},
+            h('div',{className:'progress-bar',style:{width:pct+'%',
+              background:pct>=90?'linear-gradient(90deg,#22c55e,#16a34a)':
+                'linear-gradient(90deg,#eab308,#f59e0b)'}}))
+        ),
+        isAdmin&&h('div',{onClick:e=>e.stopPropagation(),style:{
+          display:'flex',gap:6,paddingTop:6,borderTop:'1px solid rgba(255,255,255,0.06)'}},
+          h('button',{className:'kv-btn ghost sm',onClick:()=>setEditModule(m),style:{flex:1,fontSize:'10px'}},'✏️ Edit'),
+          h('button',{className:'kv-btn danger sm',onClick:()=>handleDeleteModule(m.id),style:{fontSize:'10px'}},'🗑')
+        )
+      )
+    );
+  }
+
+  const Section=(title,list,showAll=false)=>{
+    const[expanded,setExpanded]=useState(false);
+    const visible=expanded||showAll?list:list.slice(0,4);
+    if(!list||list.length===0)return null;
+    return h('div',{style:{marginBottom:20}},
+      h('div',{style:{display:'flex',alignItems:'center',marginBottom:10}},
+        h('h3',{style:{fontFamily:'Playfair Display,serif',fontSize:'16px',color:'var(--tx)',flex:1}},title),
+        list.length>4&&h('button',{onClick:()=>setExpanded(!expanded),
+          style:{background:'none',border:'none',color:'var(--ga)',fontSize:'12px',cursor:'pointer'}},
+          expanded?'Show less':'See all ('+list.length+')')
+      ),
+      visible.map(m=>h(ModuleCard,{key:m.id,m})),
+    );
+  };
+
+  return h('div',{style:{padding:'12px 16px 90px'}},
+    // Header
+    h('div',{style:{display:'flex',alignItems:'center',marginBottom:6}},
+      h('h2',{style:{fontFamily:'Playfair Display,serif',fontSize:'22px',color:'var(--tx)',flex:1}},'📚 Learning Hub'),
+      isAdmin&&h('button',{className:'kv-btn sm',onClick:()=>setShowCreate(true)},'+ Module')
+    ),
+    h('p',{style:{fontSize:'12px',color:'var(--tx3)',marginBottom:14}},
+      'Explore Karnataka\'s wildlife, biodiversity, and conservation'),
+
+    // Rotating wildlife fact banner
+    h('div',{key:factIdx,style:{
+      background:'linear-gradient(135deg,rgba(34,197,94,0.12),rgba(10,46,24,0.6))',
+      border:'1px solid rgba(34,197,94,0.2)',borderRadius:14,
+      padding:'14px 16px',marginBottom:16,animation:'fadeInFast 0.4s ease',
+    }},
+      h('p',{style:{fontSize:'11px',color:'var(--ga)',fontWeight:600,marginBottom:4}},
+        '🌿 Karnataka Wildlife Fact'),
+      h('p',{style:{fontSize:'13px',color:'var(--tx2)',lineHeight:'1.5'}},
+        WILDLIFE_FACTS[factIdx])
+    ),
+
+    // Search bar
+    h('div',{className:'search-wrap',style:{marginBottom:12}},
+      h('span',{className:'search-icon'},'🔍'),
+      h('input',{className:'kv-input',type:'text',placeholder:'Search modules, topics, wildlife…',
+        value:search,onChange:e=>setSearch(e.target.value)})
+    ),
+
+    // Category tabs + Bookmark filter
+    h('div',{style:{overflowX:'auto',WebkitOverflowScrolling:'touch',marginBottom:14}},
+      h('div',{style:{display:'flex',gap:6,paddingBottom:4,width:'max-content'}},
+        LEARN_CATEGORIES.map(c=>h('button',{key:c.id||'all',onClick:()=>{setCatFilter(c.id);setShowBookmarks(false);},
+          style:{padding:'5px 12px',borderRadius:20,fontSize:'11px',cursor:'pointer',border:'none',whiteSpace:'nowrap',
+            background:!showBookmarks&&catFilter===c.id?'rgba(34,197,94,0.2)':'rgba(255,255,255,0.05)',
+            color:!showBookmarks&&catFilter===c.id?'#22c55e':'var(--tx3)'}},c.emoji,' ',c.label)),
+        user&&h('button',{onClick:()=>{setShowBookmarks(!showBookmarks);setCatFilter(null);},
+          style:{padding:'5px 12px',borderRadius:20,fontSize:'11px',cursor:'pointer',border:'none',whiteSpace:'nowrap',
+            background:showBookmarks?'rgba(34,197,94,0.2)':'rgba(255,255,255,0.05)',
+            color:showBookmarks?'#22c55e':'var(--tx3)'}},
+          '🔖 Bookmarks',bookmarks.length>0&&` (${bookmarks.length})`)
+      )
+    ),
+
+    loading
+      ? h('div',{style:{display:'flex',justifyContent:'center',padding:40}},h(Spinner,{size:32}))
+      : filtered.length===0
+        ? h('div',{style:{textAlign:'center',padding:'40px 20px',color:'var(--tx3)'}},
+            h('div',{style:{fontSize:48,marginBottom:12}},'📚'),
+            h('p',{style:{fontSize:'14px'}},
+              search?'No modules match your search.':
+              showBookmarks?'No bookmarks yet. Tap 🤍 on any module!':
+              'No modules yet.'))
+        : h('div',null,
+            // Progress section
+            !search&&!showBookmarks&&inProgress.length>0&&Section('📖 Continue Learning',inProgress,false),
+            // Featured
+            !search&&!showBookmarks&&featured.length>0&&Section('⭐ Featured',featured,false),
+            // All / filtered
+            Section(search?`Results for "${search}"`:showBookmarks?'🔖 Bookmarked':catFilter?
+              (LEARN_CATEGORIES.find(c=>c.id===catFilter)?.label||'Modules'):
+              'All Modules',
+              search||showBookmarks||catFilter?filtered:
+              filtered.filter(m=>!m.featured&&(progress[m.id]||0)<90),true),
+            // Completed
+            !search&&!showBookmarks&&completed.length>0&&Section('✅ Completed',completed,false),
+          ),
+
+    // Stats strip
+    user&&!loading&&h('div',{style:{
+      background:'rgba(15,77,40,0.2)',border:'1px solid rgba(34,197,94,0.1)',
+      borderRadius:14,padding:'14px 16px',marginTop:4}},
+      h('p',{style:{fontSize:'13px',fontWeight:600,color:'var(--tx)',marginBottom:8}},
+        '📊 Your Progress'),
+      h('div',{style:{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:8}},
+        [
+          {label:'Modules Started',val:Object.keys(progress).length,icon:'📖'},
+          {label:'Completed',val:completed.length,icon:'✅'},
+          {label:'Bookmarks',val:bookmarks.length,icon:'🔖'},
+        ].map(s=>h('div',{key:s.label,style:{textAlign:'center',background:'rgba(34,197,94,0.05)',
+          borderRadius:10,padding:10}},
+          h('div',{style:{fontSize:20,marginBottom:2}},s.icon),
+          h('div',{style:{fontSize:'18px',fontWeight:700,color:'#22c55e'}},s.val),
+          h('div',{style:{fontSize:'9px',color:'var(--tx3)',marginTop:1}},s.label)
+        ))
+      )
+    ),
+
+    // Module reader modal
+    selectedModule&&h(LearningModuleReader,{
+      module:selectedModule,user,
+      progress:progress[selectedModule.id]||0,
+      onProgressUpdate:handleProgressUpdate,
+      onClose:()=>setSelectedModule(null),
+    }),
+
+    // Module editor modal
+    (editModule||showCreate)&&h(AdminModuleEditor,{
+      module:editModule||null,user,
+      onClose:()=>{setEditModule(null);setShowCreate(false);},
+      onSaved:()=>{setEditModule(null);setShowCreate(false);},
+    }),
+
+    toast.toast&&h(Toast,{key:toast.toast.key,...toast.toast,onDone:toast.clear})
+  );
+}
+
+// ══════════════════════════════════════════════════════════════════
+// ADMIN DASHBOARD
+// ══════════════════════════════════════════════════════════════════
+function AdminDashboard({user,isAdmin}){
+  const[stats,setStats]=useState({total:0,active:0,verified:0,critical:0,pending:0,districts:[]});
+  const[reports,setReports]=useState([]);
+  const[alerts,setAlerts]=useState([]);
+  const[alertForm,setAlertForm]=useState({
+    title:'',message:'',priority:'high',district:'Statewide',animalEmoji:'⚠️',expiryHours:12
+  });
+  const[sending,setSending]=useState(false);
+  const[tab,setTab]=useState('overview');
+  const[editReport,setEditReport]=useState(null);
+  const toast=useToast();
+
+  useEffect(()=>{
+    if(!window.KV||!isAdmin)return;
+    const u1=window.KV.listenDashboardStats(setStats);
+    const u2=window.KV.listenReports({limitCount:20},(items)=>setReports(items||[]));
+    const u3=window.KV.listenAlerts(setAlerts);
+    return()=>{u1?.();u2?.();u3?.();};
+  },[isAdmin]);
+
+  async function sendAlert(){
+    if(!alertForm.title||!alertForm.message){toast.show('Title and message required','error');return;}
+    setSending(true);
+    try{
+      await window.KV.createAlert(alertForm,user);
+      setAlertForm({title:'',message:'',priority:'high',district:'Statewide',animalEmoji:'⚠️',expiryHours:12});
+      toast.show('Alert sent! 🚨');
+    }catch(e){toast.show(e.message,'error');}
+    finally{setSending(false);}
+  }
+
+  if(!isAdmin)return h('div',{style:{padding:40,textAlign:'center',color:'var(--tx3)'}},
+    h('div',{style:{fontSize:48,marginBottom:12}},'🔒'),
+    h('h3',{style:{color:'var(--tx)',marginBottom:8}},'Admin Access Only'),
+    h('p',{style:{fontSize:'13px',lineHeight:'1.6'}},
+      'This panel is restricted to verified Karnataka Forest Department staff.\nOnly ',
+      h('strong',{style:{color:'var(--ga)'}},window.KV?.ADMIN_EMAIL||'the designated admin'),
+      ' has access.')
+  );
+
+  const statItems=[
+    {label:'Total Reports',val:stats.total,icon:'📊',color:'#22c55e'},
+    {label:'Active',      val:stats.active, icon:'🟢',color:'#22c55e'},
+    {label:'Verified',    val:stats.verified,icon:'✅',color:'#22c55e'},
+    {label:'Critical',    val:stats.critical,icon:'🔴',color:'#ef4444'},
+    {label:'Pending',     val:stats.pending, icon:'⏳',color:'#eab308'},
+    {label:'Live Alerts', val:alerts.length, icon:'🚨',color:'#f97316'},
+  ];
+
+  const tabStyle=(t)=>({
+    padding:'6px 14px',borderRadius:20,fontSize:'12px',cursor:'pointer',border:'none',
+    background:tab===t?'rgba(34,197,94,0.2)':'transparent',
+    color:tab===t?'#22c55e':'var(--tx3)',fontWeight:tab===t?600:400,
+  });
+
+  return h('div',{style:{padding:'0 16px 90px'}},
+    h('h2',{style:{fontFamily:'Playfair Display,serif',fontSize:'22px',color:'var(--tx)',padding:'20px 0 4px'}},'🛡️ Admin Dashboard'),
+    h('p',{style:{fontSize:'11px',color:'var(--tx3)',marginBottom:14}},'Signed in as '+user?.email),
+
+    // Tabs
+    h('div',{style:{display:'flex',gap:4,marginBottom:16,flexWrap:'wrap',
+      background:'rgba(255,255,255,0.03)',borderRadius:12,padding:4}},
+      h('button',{style:tabStyle('overview'),onClick:()=>setTab('overview')},'📊 Overview'),
+      h('button',{style:tabStyle('reports'), onClick:()=>setTab('reports')},'📋 Reports'),
+      h('button',{style:tabStyle('districts'),onClick:()=>setTab('districts')},'🗺️ Districts'),
+      h('button',{style:tabStyle('alerts'),  onClick:()=>setTab('alerts')},'🚨 Alerts'),
+    ),
+
+    // ── Overview ──
+    tab==='overview'&&h('div',null,
+      h('div',{style:{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:8,marginBottom:20}},
+        statItems.map(s=>h('div',{key:s.label,className:'stat-card'},
+          h('div',{style:{fontSize:18,marginBottom:4}},s.icon),
+          h('div',{className:'stat-num',style:{color:s.color}},s.val),
+          h('div',{className:'stat-label'},s.label)))
+      ),
+      // Recent activity
+      h('div',{style:{marginBottom:20}},
+        h('h3',{style:{fontSize:'15px',color:'var(--tx)',marginBottom:10}},'📝 Recent Reports'),
+        reports.slice(0,5).map(r=>h('div',{key:r.id,style:{
+          display:'flex',alignItems:'center',gap:10,padding:'10px 12px',
+          background:'rgba(255,255,255,0.04)',borderRadius:10,marginBottom:6}},
+          h('span',{style:{fontSize:18}},r.animalEmoji||'🐾'),
+          h('div',{style:{flex:1}},
+            h('p',{style:{fontSize:'13px',fontWeight:600,color:'var(--tx)'}},r.animalName),
+            h('p',{style:{fontSize:'11px',color:'var(--tx3)'}},r.district+' · '+timeAgo(r.createdAt))),
+          h('span',{style:{fontSize:'10px',
+            color:r.severity==='critical'?'#ef4444':r.severity==='high'?'#f97316':'var(--tx3)',
+            fontWeight:600}},r.severity?.toUpperCase()),
+          !r.verified&&h('button',{className:'kv-btn sm',
+            onClick:()=>window.KV.adminUpdateReport(r.id,{verified:true,status:'active'},user?.uid).catch(()=>{}),
+            style:{padding:'4px 8px',fontSize:'10px'}},'✅')
+        ))
+      )
+    ),
+
+    // ── Reports ──
+    tab==='reports'&&h('div',null,
+      h('div',{style:{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:12}},
+        h('p',{style:{fontSize:'13px',color:'var(--tx2)'}},'Showing most recent 20 reports'),
+        h('button',{className:'kv-btn ghost sm',onClick:()=>window.KV.exportCSV(reports)},'📥 Export CSV')
+      ),
+      reports.map(r=>h(ReportCard,{key:r.id,report:r,isAdmin:true,isRanger:true,user,
+        onClick:()=>{},
+        onVerify:e=>{e.stopPropagation();window.KV.adminUpdateReport(r.id,{verified:true,status:'active'},user?.uid).then(()=>toast.show('✅ Verified')).catch(e=>toast.show(e.message,'error'));},
+        onDelete:e=>{e.stopPropagation();confirm('Delete?')&&window.KV.deleteReport(r.id,user?.uid).then(()=>toast.show('Deleted')).catch(()=>{});},
+        onEdit:e=>{e.stopPropagation();setEditReport(r);},
+      }))
+    ),
+
+    // ── Districts ──
+    tab==='districts'&&h('div',null,
+      h('p',{style:{fontSize:'12px',color:'var(--tx3)',marginBottom:12}},
+        `Breakdown from ${stats.total} reports across districts`),
+      stats.districts.length===0
+        ? h('p',{style:{color:'var(--tx3)',fontSize:'13px',textAlign:'center',padding:40}},'No data yet.')
+        : stats.districts.map(d=>h('div',{key:d.district,className:'district-card'},
+            h('div',{style:{width:40,height:40,borderRadius:10,background:'rgba(34,197,94,0.1)',
+              display:'flex',alignItems:'center',justifyContent:'center',fontSize:18,flexShrink:0}},'📍'),
+            h('div',{style:{flex:1,minWidth:0}},
+              h('p',{style:{fontWeight:600,fontSize:'14px',color:'var(--tx)',marginBottom:4}},d.district),
+              h('div',{style:{display:'flex',gap:8,flexWrap:'wrap'}},
+                h('span',{style:{fontSize:'11px',color:'var(--tx3)'}},`${d.total} total`),
+                d.critical>0&&h('span',{style:{fontSize:'11px',color:'#ef4444'}},`${d.critical} critical`),
+                d.active>0&&h('span',{style:{fontSize:'11px',color:'#22c55e'}},`${d.active} active`),
+                d.verified>0&&h('span',{style:{fontSize:'11px',color:'#60a5fa'}},`${d.verified} verified`)
+              ),
+              d.animals.length>0&&h('p',{style:{fontSize:'10px',color:'var(--tx3)',marginTop:3}},
+                d.animals.slice(0,4).join(' · ')+(d.animals.length>4?` +${d.animals.length-4} more`:''))
+            ),
+            h('div',{style:{background:'rgba(239,68,68,0.12)',color:'#f87171',
+              borderRadius:8,padding:'4px 10px',fontSize:'13px',fontWeight:700,flexShrink:0}},d.total)
+          ))
+    ),
+
+    // ── Alerts ──
+    tab==='alerts'&&h('div',null,
+      // Send alert form
+      h('div',{style:{background:'rgba(239,68,68,0.08)',border:'1px solid rgba(239,68,68,0.25)',
+        borderRadius:16,padding:16,marginBottom:20}},
+        h('h3',{style:{fontSize:'16px',color:'#fca5a5',marginBottom:14}},'🚨 Send Emergency Alert'),
+        h('div',{style:{display:'grid',gridTemplateColumns:'1fr 1fr',gap:8,marginBottom:8}},
+          h('input',{className:'kv-input',placeholder:'Alert title *',value:alertForm.title,
+            onChange:e=>setAlertForm(f=>({...f,title:e.target.value}))}),
+          h('select',{className:'kv-input',value:alertForm.priority,
+            onChange:e=>setAlertForm(f=>({...f,priority:e.target.value}))},
+            ['critical','high','medium','low'].map(p=>h('option',{key:p,value:p},capFirst(p))))
+        ),
+        h('div',{style:{display:'grid',gridTemplateColumns:'1fr 1fr',gap:8,marginBottom:8}},
+          h('select',{className:'kv-input',value:alertForm.district,
+            onChange:e=>setAlertForm(f=>({...f,district:e.target.value}))},
+            h('option',{value:'Statewide'},'Statewide'),
+            DISTRICTS.map(d=>h('option',{key:d,value:d},d))),
+          h('select',{className:'kv-input',value:alertForm.expiryHours,
+            onChange:e=>setAlertForm(f=>({...f,expiryHours:Number(e.target.value)}))},
+            [6,12,24,48,72].map(n=>h('option',{key:n,value:n},`Expires in ${n}h`)))
+        ),
+        h('textarea',{className:'kv-input',
+          placeholder:'Alert message — describe location, risk, and recommended action.',
+          style:{marginBottom:10},value:alertForm.message,
+          onChange:e=>setAlertForm(f=>({...f,message:e.target.value}))}),
+        h('button',{className:'kv-btn danger',onClick:sendAlert,disabled:sending,
+          style:{display:'flex',alignItems:'center',gap:8,width:'100%',justifyContent:'center'}},
+          sending&&h(Spinner,{size:16}),sending?'Sending…':'🚨 Broadcast Alert')
+      ),
+
+      // Active alerts list
+      alerts.length>0
+        ? h('div',null,
+            h('h3',{style:{fontSize:'14px',color:'var(--tx)',marginBottom:10}},
+              `Active Alerts (${alerts.length})`),
+            alerts.map(a=>h('div',{key:a.id,style:{
+              background:'rgba(239,68,68,0.08)',border:'1px solid rgba(239,68,68,0.2)',
+              borderRadius:10,padding:'12px 14px',marginBottom:8,display:'flex',alignItems:'center',gap:10}},
+              h('span',{style:{fontSize:18}},a.animalEmoji||'⚠️'),
+              h('div',{style:{flex:1}},
+                h('p',{style:{fontSize:'13px',fontWeight:600,color:'var(--tx)'}},a.title,
+                  h('span',{style:{fontSize:'10px',color:'#f87171',fontWeight:'normal',marginLeft:6}},
+                    capFirst(a.priority))),
+                h('p',{style:{fontSize:'11px',color:'var(--tx3)'}},
+                  a.district+' · '+timeAgo(a.createdAt)),
+                a.message&&h('p',{style:{fontSize:'11px',color:'var(--tx2)',marginTop:2}},a.message)
+              ),
+              h('button',{className:'kv-btn ghost sm',
+                onClick:()=>window.KV.resolveAlert(a.id,user?.uid).then(()=>toast.show('Alert resolved')).catch(()=>{}),
+              },'Resolve')
+            ))
+          )
+        : h('div',{style:{textAlign:'center',padding:'20px',color:'var(--tx3)'}},
+            h('p',{style:{fontSize:'13px'}},'No active alerts'))
+    ),
+
+    // Edit report modal
+    editReport&&h(ReportModal,{user,editReport,
+      onClose:()=>setEditReport(null),
+      onSuccess:()=>{setEditReport(null);toast.show('Report updated ✅');},
+    }),
+
+    toast.toast&&h(Toast,{key:toast.toast.key,...toast.toast,onDone:toast.clear})
+  );
+}
+
+// ══════════════════════════════════════════════════════════════════
+// HOME PAGE
+// ══════════════════════════════════════════════════════════════════
+function HomePage({setPage,alerts,onReport,user}){
+  const active=alerts.filter(a=>a.status!=='resolved');
+  return h('div',{style:{padding:'16px 16px 90px'}},
+    // Hero
+    h('div',{style:{background:'linear-gradient(135deg,rgba(15,77,40,0.6),rgba(4,15,7,0.8))',
+      border:'1px solid rgba(34,197,94,0.2)',borderRadius:20,
+      padding:'28px 20px',textAlign:'center',marginBottom:20}},
+      h('div',{style:{fontSize:52,marginBottom:10,animation:'float 3s ease-in-out infinite'}},'🌿'),
+      h('h1',{style:{fontFamily:'Playfair Display,serif',fontSize:'26px',color:'var(--tx)',marginBottom:6}},
+        'Karunada-Vanya'),
+      h('p',{style:{fontSize:'13px',color:'var(--tx2)',marginBottom:4}},
+        'ಕರುನಾಡ ವನ್ಯ — National Pride'),
+      h('p',{style:{fontSize:'12px',color:'var(--tx3)',marginBottom:20}},
+        'Karnataka Wildlife Awareness & Conflict Reporting Platform'),
+      h('div',{style:{display:'flex',gap:10,justifyContent:'center',flexWrap:'wrap'}},
+        h('button',{className:'kv-btn',onClick:onReport,
+          style:{display:'flex',alignItems:'center',gap:6}},'🚨 Report Sighting'),
+        h('button',{className:'kv-btn ghost',onClick:()=>setPage('reports')},'📋 View Reports'))
+    ),
+
+    // Alert strip
+    active.length>0&&h('div',{style:{background:'rgba(239,68,68,0.1)',border:'1px solid rgba(239,68,68,0.3)',
+      borderRadius:14,padding:'12px 16px',marginBottom:16,cursor:'pointer'},
+      onClick:()=>setPage('reports')},
+      h('p',{style:{fontSize:'12px',fontWeight:600,color:'#fca5a5',marginBottom:6}},
+        `🔴 ${active.length} Active Wildlife Alert${active.length>1?'s':''}`),
+      active.slice(0,2).map((a,i)=>h('p',{key:i,style:{fontSize:'11px',color:'#fca5a5',marginBottom:2}},
+        (a.animalEmoji||'⚠️')+' '+a.title+' — '+a.district))
+    ),
+
+    // Quick stats
+    h('div',{style:{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:10,marginBottom:20}},
+      [{emoji:'🐯',val:'300+',label:'Tigers in Karnataka'},
+       {emoji:'🐘',val:'6,000+',label:'Elephants'},
+       {emoji:'📋',val:'Live',label:'Reports Active'}]
+      .map(s=>h('div',{key:s.label,style:{background:'rgba(15,77,40,0.2)',border:'1px solid rgba(34,197,94,0.15)',
+        borderRadius:12,padding:'14px 8px',textAlign:'center'}},
+        h('div',{style:{fontSize:24,marginBottom:4}},s.emoji),
+        h('p',{style:{fontSize:'16px',fontWeight:700,color:'#22c55e',marginBottom:2}},s.val),
+        h('p',{style:{fontSize:'10px',color:'var(--tx3)',lineHeight:'1.3'}},s.label)))
+    ),
+
+    // Nav cards
+    h('div',{style:{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10,marginBottom:20}},
+      [{icon:'📋',title:'Live Reports',desc:'Real-time wildlife sightings',page:'reports',color:'#ef4444'},
+       {icon:'🌲',title:'Forest News',desc:'Updates from the forest',page:'forest',color:'#22c55e'},
+       {icon:'📚',title:'Learn',desc:'Wildlife knowledge hub',page:'learn',color:'#818cf8'},
+       {icon:'🚨',title:'Report Now',desc:'Submit a new sighting',page:'__report',color:'#f97316'}]
+      .map(c=>h('div',{key:c.page,onClick:()=>c.page==='__report'?onReport():setPage(c.page),
+        style:{background:`${c.color}11`,border:`1px solid ${c.color}33`,
+          borderRadius:14,padding:'16px 14px',cursor:'pointer',transition:'all 0.2s'}},
+        h('div',{style:{fontSize:26,marginBottom:8}},c.icon),
+        h('p',{style:{fontSize:'13px',fontWeight:600,color:'var(--tx)',marginBottom:3}},c.title),
+        h('p',{style:{fontSize:'11px',color:'var(--tx3)'}},c.desc)))
+    ),
+
+    // Emergency contacts
+    h('div',{style:{background:'rgba(15,77,40,0.15)',border:'1px solid rgba(34,197,94,0.1)',
+      borderRadius:14,padding:'14px 16px'}},
+      h('p',{style:{fontSize:'12px',fontWeight:600,color:'var(--tx)',marginBottom:8}},
+        '📞 Wildlife Emergency Contacts'),
+      [{label:'Forest Helpline',num:'1926'},
+       {label:'Wildlife Crime',num:'1800-103-1111'},
+       {label:'Karnataka Forest',num:'080-2238-4374'}]
+      .map(c=>h('div',{key:c.num,style:{display:'flex',justifyContent:'space-between',marginBottom:4}},
+        h('span',{style:{fontSize:'12px',color:'var(--tx3)'}},c.label),
+        h('a',{href:`tel:${c.num}`,style:{fontSize:'12px',color:'var(--ga)',fontWeight:600,textDecoration:'none'}},c.num)))
+    )
+  );
+}
+
+// ══════════════════════════════════════════════════════════════════
+// ROOT APP
+// ══════════════════════════════════════════════════════════════════
+function App(){
+  const[page,setPage]=useState('home');
+  const[showReport,setShowReport]=useState(false);
+  const[firestoreAlerts,setFirestoreAlerts]=useState([]);
+  const toast=useToast();
+  const online=useOnline();
+  const{user,profile,authLoading,authError,signIn,signOut,isAdmin,isRanger}=useAuth();
+
+  // Real-time emergency alerts
+  useEffect(()=>{
+    const poll=setInterval(()=>{
+      if(window.KV){
+        clearInterval(poll);
+        clearTimeout(alertTimeout);
+        const unsub=window.KV.listenAlerts(setFirestoreAlerts);
+        window._kvAlertUnsub=unsub;
+      }
+    },200);
+    // Safety timeout — stop polling if Firebase never loads after 10 s
+    const alertTimeout=setTimeout(()=>{ clearInterval(poll); },10000);
+    return()=>{clearInterval(poll);clearTimeout(alertTimeout);window._kvAlertUnsub?.();};
+  },[]);
+
+  function renderPage(){
+    switch(page){
+      case'home':    return h(HomePage,{setPage,alerts:firestoreAlerts,onReport:()=>setShowReport(true),user});
+      case'reports': return h(LiveReportsPage,{user,isAdmin,isRanger,onReport:()=>setShowReport(true)});
+      case'forest':  return h(ForestUpdatesPage,{user,isAdmin,isRanger});
+      case'learn':   return h(LearningPage,{user,isAdmin});
+      case'admin':   return h(AdminDashboard,{user,isAdmin});
+      default:       return h(HomePage,{setPage,alerts:firestoreAlerts,onReport:()=>setShowReport(true),user});
+    }
+  }
+
+  return h('div',{style:{background:'var(--gd)',minHeight:'100vh'}},
+    !online&&h('div',{className:'offline-banner'},'⚠️ Offline — reports queued and will sync on reconnect.'),
+    h(AuthHeader,{user,profile,authLoading,authError,signIn,signOut}),
+    firestoreAlerts.length>0&&h(EmergencyBanner,{alerts:firestoreAlerts,onClick:()=>setPage('reports')}),
+    h(NavBar,{page,setPage,alertCount:firestoreAlerts.length}),
+    h('div',{className:'fade-in',key:page},renderPage()),
+    h(BottomNav,{page,setPage,alertCount:firestoreAlerts.length,isAdmin}),
+    showReport&&h(ReportModal,{user,
+      onClose:()=>setShowReport(false),
+      onSuccess:(action)=>{
+        toast.show(action==='updated'?'Report updated ✅':'🐾 Report submitted — thank you for protecting Karnataka\'s wildlife!');
+      }
+    }),
+    toast.toast&&h(Toast,{key:toast.toast.key,...toast.toast,onDone:toast.clear})
+  );
+}
+
+// Mount
+const root=ReactDOM.createRoot(document.getElementById('app-root'));
+root.render(h(App,{}));
+</script>
+</body>
+</html>

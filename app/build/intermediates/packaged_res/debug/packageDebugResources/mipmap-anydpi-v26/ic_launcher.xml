@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Adaptive icon for API 26+ devices.
+    Falls back to the PNG mipmaps on older devices.
+    Both layers point to the existing PNG drawables so no new images are needed.
+-->
+<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+    <background android:drawable="@color/app_bg" />
+    <foreground android:drawable="@mipmap/ic_launcher" />
+</adaptive-icon>
