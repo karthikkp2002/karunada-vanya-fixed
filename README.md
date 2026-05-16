@@ -131,10 +131,12 @@ KarunadaVanyaa/
 # 📸 Screenshots
 
 ## Home Screen
-<img width="923" height="830" alt="image" src="https://github.com/user-attachments/assets/b08d6733-86d9-41d3-a6f8-9c586e6bd78c" />
+<img width="1080" height="2400" alt="Screenshot_2026-05-16-15-37-21-880_com example karunadavanyaa" src="https://github.com/user-attachments/assets/94dbb3bd-0398-44d0-bcab-1fdd70e06b21" />
+
 
 ## Wildlife Reporting Screen
-<img width="921" height="832" alt="image" src="https://github.com/user-attachments/assets/69e8d2b9-921b-4a0b-a6ef-e7707a48d7de" />
+<img width="1080" height="2400" alt="Screenshot_2026-05-16-15-37-24-692_com example karunadavanyaa" src="https://github.com/user-attachments/assets/ceef832d-1b08-4259-a58b-39f26cb4d90f" />
+
 
 
 ---
